@@ -1,2 +1,2 @@
 # issuetracker
-This is an issue tracker made during the cource WEB3 at ZHAW.
+This is an issue tracker made during the course WEB3 at ZHAW.
