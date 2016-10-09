@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "webpack-dev-server --progress --colors"
+    "serve": "webpack-dev-server --progress --colors --host 192.168.1.153"
   },
   "repository": {
     "type": "git",
