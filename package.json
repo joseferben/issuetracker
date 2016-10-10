@@ -12,6 +12,7 @@
     "css-loader": "^0.25.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "expose-loader": "^0.7.1",
+    "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.9.0",
     "http": "0.0.0",
