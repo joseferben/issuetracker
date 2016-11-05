@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "This is an issuetracker that will bring JIRA to the ground.",
   "main": "index.js",
+  "dependencies": {
+    "webpack": "^2.1.0-beta.25"
+  },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-loader": "^6.2.7",
     "bootstrap-loader": "^2.0.0-beta.12",
     "bootstrap-sass": "^3.3.7",
     "css-loader": "^0.25.0",
@@ -20,16 +21,15 @@
     "node-sass": "^3.10.1",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^1.6.0",
-    "riot": "^2.6.5",
-    "riotjs-loader": "^3.0.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7"
+    "url-loader": "^0.5.7",
+    "webpack": "^2.1.0-beta.25"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serveAtHome": "webpack-dev-server --progress --colors --host 192.168.1.153",
-    "serve": "webpack-dev-server --progress --colors",
+    "serve": "webpack-dev-server --inline --hot --progress --colors",
     "badServe": "node http.js"
   },
   "repository": {

@@ -1,18 +1,16 @@
 <issue>
-    <tr>
         <td>
             <label class="checkbox-inline"><input type="checkbox" value=""></label>
         </td>
         <td>
-            { opts.title }
+            { title }
         </td>
         <td>
-            { opts.priority }
+            { priority }
         </td>
         <td>
-            { opts.duedate }
+            { duedate }
         </td>
-    </tr>
     <script>
 
     </script>
