@@ -1,3 +1,4 @@
+require('./Issue.tag');
 <issuetable>
     <table class="table top-buffer">
         <thead>
@@ -16,7 +17,7 @@
     <script>
         this.issues = [{title: 'test 1', priority: 'high', duedate: '12.12.12'},
             {title: 'test 2', priority: 'low', duedate: '11.11.11'},
-            {title: 'test 3', priority: 'high', duedate: '12.08.15'}];
+            {title: 'test 3', priority: 'low', duedate: '12.09.15'}];
     </script>
 
 </issuetable>

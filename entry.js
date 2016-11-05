@@ -5,4 +5,6 @@ require('eonasdan-bootstrap-datetimepicker');
 require('./src/datepicker');
 require('./mockup.html');
 require('./index.html');
+require('./tags/App.tag');
 
+riot.mount('*');

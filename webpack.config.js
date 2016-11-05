@@ -10,11 +10,17 @@ module.exports = {
 			riot: 'riot'
 		})
 	],
+
 	module: {
-		preLoaders: [
-			{ test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { type: 'none' } }
-		],
+		    preLoaders: [
+			          { test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { type: 'none' } }
+			        ],
 		loaders: [
+			{ 
+				test: /\.js$|\.tag$/, exclude: /node_modules/, 
+				loader: 'babel-loader' 
+			}
+			,
 			{
 				test: /\.css$/,
 				loader: "style-loader!css-loader"
@@ -49,11 +55,7 @@ module.exports = {
 			},
 			{
 				test: /jquery/, loader: 'expose?$!expose?jQuery'
-			},
-			{ 
-				test: /\.js$|\.tag$/, exclude: /node_modules/, loader: 'babel-loader'
 			}
-
 		]
 	}
 };
