@@ -2,8 +2,12 @@ var webpack = require("webpack");
 module.exports = {
 	entry: ["./entry.js"],
 	output: {
-		path: "./app",
+		path: __dirname + "/app",
 		filename: "bundle.js"
+	},
+	devtool: 'source-map',
+	devServer: {
+		contentBase: './app'
 	},
 	plugins: [
 		new webpack.ProvidePlugin({
@@ -18,7 +22,7 @@ module.exports = {
 		loaders: [
 			{ 
 				test: /\.js$|\.tag$/, exclude: /node_modules/, 
-				loader: 'babel-loader' 
+				loader: 'babel-loader?presets[]=es2015&retainLines=true' 
 			}
 			,
 			{
