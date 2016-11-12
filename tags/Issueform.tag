@@ -1,4 +1,5 @@
 <issueform>
+<form id='issueform'>
     <div class="row">
         <div class="col-xs-12">
             <span><h3>Create Issue</h3></span>
@@ -9,7 +10,7 @@
         <div class="col-md-4 col-xs-12">
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker'>
-                    <input type='text' class="form-control"/>
+                    <input type='text' id='date' class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -20,18 +21,34 @@
             <div class="form-group">
                 <select class="form-control" id="prio">
                     <option value="" selected disabled>Priority</option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
                 </select>
             </div>
         </div>
         <div class="col-md-6 col-xs-6">
             <div class="input-group">
-                <input maxlength="20" class="form-control" name="primary" id="primary" placeholder="Issue title"
+                <input maxlength="20" class="form-control" name="title" id="primary" placeholder="Issue title"
                        type="text">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-plus-sign"></i></span>
+                <span class="input-group-addon" onclick={submit}><i class="glyphicon glyphicon-plus-sign"></i></span>
             </div>
         </div>
     </div>
+</form>
+<script>
+	var tag = this;
+	var issues = opts.issues;
+
+	tag.submit = function() {
+		issues.add({
+				title: tag.issueform.title.value,
+				priority: tag.issueform.prio.value,
+				duedate: tag.issueform.date.value
+			});
+		tag.issueform.title.value = ''; 
+		tag.issueform.prio.value = ''; 
+	}
+</script>
 </issueform>
+
