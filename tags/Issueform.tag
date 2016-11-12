@@ -44,7 +44,8 @@
 		issues.add({
 				title: tag.issueform.title.value,
 				priority: tag.issueform.prio.value,
-				duedate: tag.issueform.date.value
+				duedate: tag.issueform.date.value,
+				done: false 
 			});
 		tag.issueform.title.value = ''; 
 		tag.issueform.prio.value = ''; 

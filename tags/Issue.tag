@@ -1,6 +1,6 @@
 <issue>
         <td>
-            <label class="checkbox-inline"><input type="checkbox" value=""></label>
+            <label class="checkbox-inline"><input type="checkbox" checked={ done } onclick={ toggle } value=""></label>
         </td>
         <td>
             { title }
@@ -12,6 +12,7 @@
             { duedate }
         </td>
     <script>
-
+	var issue = this;
+	
     </script>
 </issue>

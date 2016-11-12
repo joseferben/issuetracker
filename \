@@ -21,7 +21,6 @@ export default class IssueCollection {
 	
 	toggleDone(title) {
 		this.collection.forEach((cur, idx, arr) => arr[idx].done = !cur.done && cur.title === title || cur.done);
-		this.save();
 	}
 
 	fetch() {

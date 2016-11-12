@@ -10,13 +10,19 @@ require('./Issue.tag');
         </tr>
         </thead>
         <tbody>
-            <tr each={issues} data-is="issue"></tr>
+            <tr each={ issues.getAll() } data-is="issue"></tr>
         </tbody>
     </table>
 <script>
+	let tag = this;
 	this.on('update', function() {
-		this.issues = opts.data;
+		this.issues = opts.issues;
 	})
+
+	this.toggle = (e) => { 
+		this.issues.toggleDone(e.item.title);
+		console.log(this.issues);
+	}
 </script>
 
 </issuetable>
