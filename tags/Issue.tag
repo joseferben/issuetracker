@@ -12,11 +12,10 @@
             { duedate }
         </td>
 	<td>
-	     <button type="button" class="btn btn-danger btn-md">
-          	<span class="glyphicon glyphicon-trash" onclick={ parent.remove }></span>
+	     <button type="button" class="btn btn-danger btn-md" onclick={ parent.remove }>
+          	<span class="glyphicon glyphicon-trash"></span>
 	     </button>
 	</td>
     <script>
-	var tag = this;
     </script>
 </issue>

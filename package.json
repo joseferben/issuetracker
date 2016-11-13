@@ -23,6 +23,7 @@
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^1.6.0",
     "riot": "^2.6.5",
+    "riot-compiler": "^2.5.5",
     "riotjs-loader": "^3.0.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",

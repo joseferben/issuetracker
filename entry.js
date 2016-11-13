@@ -1,10 +1,9 @@
-'use strict';
-require('jquery');
-require('bootstrap-loader');
-require('eonasdan-bootstrap-datetimepicker');
-require('./src/datepicker');
-require('./mockup.html');
-require('./app/index.html');
-require('./tags/App.tag');
+import 'jquery';
+import 'bootstrap-loader';
+import 'eonasdan-bootstrap-datetimepicker';
+import './src/datepicker';
+import './mockup.html';
+import './app/index.html';
+import './tags/App.tag';
 
-riot.mount('*');
+riot.mount('*'); 

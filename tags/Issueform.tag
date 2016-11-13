@@ -32,7 +32,7 @@ import uuid from 'uuid'
             <div class="input-group">
                 <input maxlength="20" class="form-control" name="title" id="primary" placeholder="Issue title"
                        type="text">
-                <span class="input-group-addon" onclick={submit}><i class="glyphicon glyphicon-plus-sign"></i></span>
+                <span class="input-group-addon" onclick={ submit }><i class="glyphicon glyphicon-plus-sign"></i></span>
             </div>
         </div>
     </div>

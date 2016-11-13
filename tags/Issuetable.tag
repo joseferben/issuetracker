@@ -30,5 +30,4 @@ require('./Issue.tag');
 		this.issues = opts.issues;
 	})
 </script>
-
 </issuetable>
