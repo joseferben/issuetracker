@@ -27,6 +27,7 @@
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
+    "uuid": "^2.0.3",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },

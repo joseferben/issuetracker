@@ -1,3 +1,4 @@
+import uuid from 'uuid'
 <issueform>
 <form id='issueform'>
     <div class="row">
@@ -37,18 +38,22 @@
     </div>
 </form>
 <script>
-	var tag = this;
-	var issues = opts.issues;
+	let tag = this,
+		issues = opts.issues;
 
-	tag.submit = function() {
-		issues.add({
-				title: tag.issueform.title.value,
-				priority: tag.issueform.prio.value,
-				duedate: tag.issueform.date.value,
-				done: false 
-			});
+	tag.submit = () => {
+		if (tag.issueform.title.value !== '') {
+			issues.add({
+					id: uuid.v1(),
+					title: tag.issueform.title.value,
+					priority: tag.issueform.prio.value,
+					duedate: tag.issueform.date.value,
+					done: false 
+				});
+		}
 		tag.issueform.title.value = ''; 
 		tag.issueform.prio.value = ''; 
+		tag.issueform.date.value = ''; 
 	}
 </script>
 </issueform>

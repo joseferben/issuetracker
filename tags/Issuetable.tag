@@ -7,6 +7,7 @@ require('./Issue.tag');
             <td>Title</td>
             <td>Priority</td>
             <td>Due to</td>
+            <td></td>
         </tr>
         </thead>
         <tbody>
@@ -14,15 +15,20 @@ require('./Issue.tag');
         </tbody>
     </table>
 <script>
-	let tag = this;
-	this.on('update', function() {
+	this.toggle = (evt) => { 
+		this.issues.toggleDone(evt.item.id);
+		this.update();
+	}
+	
+	this.remove = (evt) => {
+		console.log(evt);
+		this.issues.remove(evt.item.id);
+		this.update();
+	}
+
+	this.on('update', () => { 
 		this.issues = opts.issues;
 	})
-
-	this.toggle = (e) => { 
-		this.issues.toggleDone(e.item.title);
-		console.log(this.issues);
-	}
 </script>
 
 </issuetable>
