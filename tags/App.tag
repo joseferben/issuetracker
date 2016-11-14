@@ -11,7 +11,7 @@ import Navigation from './Navigation.tag';
 			</div>
 		</div>
 <script>
-	this.collection = new IssueCollection(this);
+	this.collection = new IssueCollection(this, localStorage);
 	this.on('mount', function() {
 		console.log('fetching collection from issueList');	
 		this.collection.fetch();

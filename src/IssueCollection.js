@@ -1,9 +1,11 @@
 import uuid from 'uuid'
 export default class IssueCollection {
-	constructor(tag) {
+	constructor(tag, storage) {
 		if (tag) {
 			this.riot_tag = tag;
 		}
+		this.storage = storage;
+		this.collection = [];
 		this.initClientId();
 	}
 
@@ -12,7 +14,7 @@ export default class IssueCollection {
 	}
 
 	save() {
-		localStorage.setItem('issues', JSON.stringify(this.collection));
+		this.storage.setItem('issues', JSON.stringify(this.collection));
 	}
 
 	add(issue) {
@@ -33,13 +35,13 @@ export default class IssueCollection {
 	}
 
 	fetch() {
-		this.collection = JSON.parse(localStorage.getItem('issues')) || [];	
-		this.clientId = localStorage.getItem('clientId') || '';
+		this.collection = JSON.parse(this.storage.getItem('issues')) || [];	
+		this.clientId = this.storage.getItem('clientId') || '';
 	}
 
 	initClientId() {
-		if (localStorage.getItem('clientId') == null) {
-			localStorage.setItem('clientId', uuid.v1());
+		if (this.storage.getItem('clientId') == null) {
+			this.storage.setItem('clientId', uuid.v1());
 		}
 	}
 }
