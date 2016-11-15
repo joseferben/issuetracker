@@ -111,13 +111,18 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /issues:
+  /projects/{id}/issues:
     x-swagger-router-controller: Issue
     get: 
       tags:
         - issue
       description: Returns a list of all issues.
       operationId: getIssues
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
       responses:
         "200":
           description: Success
@@ -133,6 +138,10 @@ paths:
       description: Adds an issue.
       operationId: addIssue
       parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
         - name: issue
           in: body
           schema:
@@ -146,7 +155,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /issues/{id}:
+  /projects/{pId}/issues/{id}:
     x-swagger-router-controller: Issue
     get: 
       tags:
@@ -154,6 +163,10 @@ paths:
       description: Returns the issue with that id.
       operationId: getIssue
       parameters:
+        - name: pId
+          type: string
+          in: path
+          required: true
         - name: id
           type: string
           in: path
@@ -173,6 +186,10 @@ paths:
       description: Deletes the issue with the id.
       operationId: deleteIssue
       parameters:
+        - name: pId
+          type: string
+          in: path
+          required: true
         - name: id
           type: string
           in: path

@@ -8,7 +8,7 @@ module.exports.addProject = function addProject (req, res, next) {
 	Project.addProject(req.swagger.params, res, next);
 };
 
-module.exports.deleteProject = function deletePet (req, res, next) {
+module.exports.deleteProject = function deleteProject (req, res, next) {
 	Project.deleteProject(req.swagger.params, res, next);
 };
 

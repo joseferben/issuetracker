@@ -2,39 +2,6 @@
 var dirty = require('dirty');
 var db = dirty('tracker.db');
 
-var mockProjects = [
-	{ 
-		id: "1",
-		issues: 
-		[
-			{ 
-				id: "1",
-				project_id: "1",
-				title: "Issue 1",
-				date: "12.12.12"
-			}
-		]
-	},
-	{ 
-		id: "2",
-		issues: 
-		[
-			{ 
-				id: "3",
-				project_id: "2",
-				title: "Issue 3",
-				date: "11.11.11"
-			},
-			{ 
-				id: "4",
-				project_id: "2",
-				title: "Issue 3",
-				date: "11.11.11"
-			}
-		]
-	}
-]
-
 db.on('load', function() {
 	exports.addProject = function(args, res, next) {
 		db.set(args.project.value.id, args.project.value.issues);
@@ -53,9 +20,9 @@ db.on('load', function() {
 
 	exports.getProjects = function(args, res, next) {
 		res.setHeader('Content-Type', 'application/json');
-		var issueIds = [];
-		db.forEach(function(key, value) { issueIds.push(key) });
-		res.end(JSON.stringify({projects: issueIds}));
+		var projectsIds = [];
+		db.forEach(function(key, value) { projectsIds.push(key) });
+		res.end(JSON.stringify({projects: projectsIds}));
 	}
 
 });
