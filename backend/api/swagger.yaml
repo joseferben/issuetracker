@@ -1,0 +1,255 @@
+---
+swagger: "2.0"
+info:
+  description: "API of an issue tracker for project management."
+  version: "0.0.1"
+  title: "Issue tracker"
+  termsOfService: ""
+  contact:
+    name: "Josef Erben"
+    url: "http://erben.io"
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+host: "web3.erben.io"
+basePath: "/api"
+schemes:
+- "http"
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /:
+    x-swagger-router-controller: Default
+    get:
+      tags:
+        - default
+      description: This is the entry point that displays information about the API.
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/EntryPoint'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /projects:
+    x-swagger-router-controller: Project
+    get: 
+      tags:
+        - project
+      description: Returns a list of all project ids.
+      operationId: getProjects
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/Projects'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post: 
+      tags:
+        - project
+      description: Adds a project.
+      operationId: addProject
+      parameters:
+        - name: project
+          in: body
+          schema:
+            $ref: '#/definitions/Project'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /projects/{id}:
+    x-swagger-router-controller: Project
+    get: 
+      tags:
+        - project
+      description: Returns the project with the id.
+      operationId: getProject
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/Project'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete: 
+      tags:
+        - project
+      description: Deletes the project with the id.
+      operationId: deleteProject
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /issues:
+    x-swagger-router-controller: Issue
+    get: 
+      tags:
+        - issue
+      description: Returns a list of all issues.
+      operationId: getIssues
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/Issues'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post: 
+      tags:
+        - issue
+      description: Adds an issue.
+      operationId: addIssue
+      parameters:
+        - name: issue
+          in: body
+          schema:
+            $ref: '#/definitions/Issue'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /issues/{id}:
+    x-swagger-router-controller: Issue
+    get: 
+      tags:
+        - issue
+      description: Returns the issue with that id.
+      operationId: getIssue
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/Issue'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete: 
+      tags:
+        - issue
+      description: Deletes the issue with the id.
+      operationId: deleteIssue
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
+  EntryPoint:
+    required:
+      - version
+    properties:
+      version:
+        type: string
+  Project:
+    required: 
+      - id
+    properties:
+      id:
+        type: string
+      issues:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+  Projects:
+    required:
+      - projects
+    properties:
+      projects:
+        type: array
+        items: 
+          properties:
+            id: 
+              type: string
+  Issue:
+    required:
+      - id
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      date: 
+        type: string
+  Issues:
+    required:
+      - issues
+    properties:
+      issues:
+        type: array
+        items: 
+          properties:
+            id: 
+              type: string
