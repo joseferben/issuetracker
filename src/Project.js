@@ -18,7 +18,7 @@ export default class Project {
 	}
 
 	save() {
-		let projects = JSON.parse(this.storage.getItem('projects')) || [];
+		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		projects[this.projectId] = this.issues;
 		this.storage.setItem('projects', JSON.stringify(projects));
 	}
@@ -42,7 +42,7 @@ export default class Project {
 	}
 
 	fetch() {
-		let projects = JSON.parse(this.storage.getItem('projects'));
+		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId] : [];	
 		this.clientId = this.storage.getItem('clientId') || '';
 		console.log(this.issues);
