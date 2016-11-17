@@ -12,10 +12,10 @@
                        aria-expanded="false">Choose project <b class="caret"></b></a>
                     <ul class="dropdown-menu">
 			<NavigationItem></NavigationItem>
-			<li each={ this.items } data-is="item">
-                        <li><a href="#">Project 1</a></li>
-                        <li><a href="#">Project 2</a></li>
-                        <li><a href="#">Project 3</a></li>
+                        <li><a href="#{ this.projects[0] }">Project 1</a></li>
+                        <li><a href="#{ this.projects[1] }">Project 2</a></li>
+                        <li><a href="#{ this.projects[2] }">Project 3</a></li>
+                        <li><a href="#{ this.projects[3] }">Project 4</a></li>
                     </ul>
                 </li>
             </ul>
@@ -29,5 +29,6 @@
     </div>
 </nav>
 <script>
+this.projects = Object.keys(JSON.parse(localStorage.getItem('projects')));
 </script>
 </Navigation>
