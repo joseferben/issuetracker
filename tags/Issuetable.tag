@@ -21,7 +21,6 @@ require('./Issue.tag');
 	}
 	
 	this.remove = (evt) => {
-		console.log(evt);
 		this.issues.remove(evt.item.id);
 		this.update();
 	}

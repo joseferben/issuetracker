@@ -11,6 +11,8 @@
                        aria-haspopup="true"
                        aria-expanded="false">Choose project <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+			<NavigationItem></NavigationItem>
+			<li each={ this.items } data-is="item">
                         <li><a href="#">Project 1</a></li>
                         <li><a href="#">Project 2</a></li>
                         <li><a href="#">Project 3</a></li>
@@ -26,4 +28,6 @@
         </div>
     </div>
 </nav>
+<script>
+</script>
 </Navigation>
