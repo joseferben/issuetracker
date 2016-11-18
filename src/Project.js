@@ -19,12 +19,14 @@ export default class Project {
 	}
 
 	save() {
+		//TODO(rest api)
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		projects[this.projectId] = this.issues;
 		this.storage.setItem('projects', JSON.stringify(projects));
 	}
 
 	add(issue) {
+		//TODO(rest api)
 		issue.projectId = this.projectId;
 		issue.clientId = this.clientId;
 		this.issues.push(issue);
@@ -33,16 +35,19 @@ export default class Project {
 	}
 	
 	toggleDone(id) {
+		//TODO(rest api)
 		this.issues.forEach((cur, idx, arr) => arr[idx].done = (cur.done || cur.id === id) && !(cur.done && cur.id === id));
 		this.save();
 	}
 
 	remove(id) {
-		this.issues = this.collection.filter(cur => cur.id !== id);
+		//TODO(rest api)
+		this.issues = this.issues.filter(cur => cur.id !== id);
 		this.save();
 	}
 
 	fetch() {
+		//TODO(rest api)
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId] : [];	
 		this.clientId = this.storage.getItem('clientId') || '';
