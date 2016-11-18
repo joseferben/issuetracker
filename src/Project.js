@@ -45,13 +45,17 @@ export default class Project {
 		this.save();
 	}
 
+	setIssues(issues) {
+		this.issues = issues;
+		this.save();
+		this.riot_tag.update();
+	}
+
 	fetch() {
-		//TODO(rest api)
-		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => console.log(res)).catch(err => console.log(err));
+		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => res.json()).then(res => this.setIssues( res.issues)).catch(err => console.log(err));
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId] : [];	
 		this.clientId = this.storage.getItem('clientId') || '';
-		console.log(this.issues);
 	}
 
 	initClientId() {
