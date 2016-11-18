@@ -33,4 +33,3 @@ db.on('load', function() {
 	}
 
 });
-

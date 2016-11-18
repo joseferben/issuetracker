@@ -23,7 +23,7 @@ produces:
 paths:
   /:
     x-swagger-router-controller: Default
-    gets:
+    get:
       tags:
         - default
       description: This is the entry point that displays information about the API.
