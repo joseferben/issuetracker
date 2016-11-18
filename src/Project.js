@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import fetch from 'node-fetch';
 export default class Project {
 	constructor(tag, storage) {
 		if (tag) {
