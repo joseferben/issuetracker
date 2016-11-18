@@ -7,7 +7,16 @@ module.exports = {
 	},
 	devtool: 'source-map',
 	devServer: {
-		contentBase: './app'
+		contentBase: './app',
+		proxy: {
+			'/api/*': {
+				target: 'http://localhost:8081/api',
+				changeOrigin: true,
+				pathRewrite: {
+					'^/api': ''
+				}
+			}
+		}
 	},
 	plugins: [
 		new webpack.ProvidePlugin({
@@ -16,9 +25,9 @@ module.exports = {
 	],
 
 	module: {
-		    preLoaders: [
-			          { test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { type: 'none' } }
-			        ],
+		preLoaders: [
+			{ test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { type: 'none' } }
+		],
 		loaders: [
 			{ 
 				test: /\.js$|\.tag$/, exclude: /node_modules/, 

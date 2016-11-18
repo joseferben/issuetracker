@@ -1,5 +1,4 @@
 import uuid from 'uuid';
-import fetch from 'node-fetch';
 export default class Project {
 	constructor(tag, storage) {
 		if (tag) {
@@ -48,6 +47,7 @@ export default class Project {
 
 	fetch() {
 		//TODO(rest api)
+		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => console.log(res)).catch(err => console.log(err));
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId] : [];	
 		this.clientId = this.storage.getItem('clientId') || '';
