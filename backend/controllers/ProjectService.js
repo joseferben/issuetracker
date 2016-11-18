@@ -4,6 +4,7 @@ var db = dirty('tracker.db');
 
 db.on('load', function() {
 	exports.addProject = function(args, res, next) {
+		console.log(args.project.value);
 		db.set(args.project.value.id, args.project.value.issues);
 		res.end();
 	}

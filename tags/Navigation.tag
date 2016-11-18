@@ -29,6 +29,6 @@
     </div>
 </nav>
 <script>
-this.projects = Object.keys(JSON.parse(localStorage.getItem('projects')));
+this.projects = Object.keys(JSON.parse(localStorage.getItem('projects') || '{}'));
 </script>
 </Navigation>

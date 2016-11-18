@@ -29,12 +29,7 @@ db.on('load', function() {
 		res.setHeader('Content-Type', 'application/json');
 		var issueIds = [];
 		var issues = db.get(args.id.value);  
-		if (issues != null) {
-			issueIds = issues.map(function(cur) {
-				return cur.id;
-			});
-		}
-		res.end(JSON.stringify({ issues: issueIds }));
+		res.end(JSON.stringify(issues || []));
 	}
 
 });
