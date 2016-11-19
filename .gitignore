@@ -1,5 +1,5 @@
 .DS_Store
-	tracker.db
+.node-persist/
 # Logs
 logs
 *.log

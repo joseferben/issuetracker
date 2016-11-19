@@ -1,37 +1,33 @@
 'use strict';
-var dirty = require('dirty');
-var db = dirty('tracker.db');
+var storage = require('node-persist');
 
-db.on('load', function() {
+storage.init().then(function() {
 	exports.addProject = function(args, res, next) {
-		console.log(args.project.value);
-		db.set(args.project.value.id, args.project.value.issues);
+		storage.setItem(args.project.value.id, JSON.stringify(args.project.value.issues || []));
 		res.end();
 	}
 
 	exports.deleteProject = function(args, res, next) {
-		db.rm(args.id.value);
+		storage.rm(args.id.value);
 		res.end();
 	}
 
 	exports.getProject = function(args, res, next) {
 		res.setHeader('Content-Type', 'application/json');
-		res.end(JSON.stringify(getProject(db, args.id.value)));
+		res.end(JSON.stringify(getProject(storage, args.id.value)));
 	}
 
 	exports.getProjects = function(args, res, next) {
 		res.setHeader('Content-Type', 'application/json');
-		var projectsIds = [];
-		db.forEach(function(key, value) { projectsIds.push(key) });
+		var projectsIds = storage.keys();
 		res.end(JSON.stringify({projects: projectsIds}));
 	}
 
 });
 
-
-function getProject(db, id) {
+function getProject(storage, id) {
 	return {
 		id: id,
-		issues: db.get(id)
+		issues: storage.getItemSync(id)
 	}
 }

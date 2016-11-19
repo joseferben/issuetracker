@@ -18,19 +18,23 @@ export default class Project {
 	}
 
 	save() {
-		//TODO(rest api)
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		projects[this.projectId] = this.issues;
 		this.storage.setItem('projects', JSON.stringify(projects));
+		this.riot_tag.update();
 	}
 
 	add(issue) {
-		//TODO(rest api)
 		issue.projectId = this.projectId;
 		issue.clientId = this.clientId;
+		fetch('http://localhost:8080/api/projects/' + this.projectId + '/issues', 
+			{
+				method: 'POST',
+				body: JSON.stringify(issue),
+				headers: { 'Content-Type': 'application/json' }
+			}).catch(err => console.log(err));
 		this.issues.push(issue);
 		this.save();
-		this.riot_tag.update();
 	}
 	
 	toggleDone(id) {
@@ -40,7 +44,7 @@ export default class Project {
 	}
 
 	remove(id) {
-		//TODO(rest api)
+		fetch('http://localhost:8080/api/projects/' + this.projectId + '/issues/' + id, { method: 'DELETE' }).catch(err => console.log(err));
 		this.issues = this.issues.filter(cur => cur.id !== id);
 		this.save();
 	}
@@ -48,14 +52,13 @@ export default class Project {
 	setIssues(issues) {
 		this.issues = issues;
 		this.save();
-		this.riot_tag.update();
 	}
 
 	fetch() {
-		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => res.json()).then(res => this.setIssues( res.issues)).catch(err => console.log(err));
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId] : [];	
 		this.clientId = this.storage.getItem('clientId') || '';
+		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => res.json()).then(res => this.setIssues( res.issues)).catch(err => console.log(err));
 	}
 
 	initClientId() {

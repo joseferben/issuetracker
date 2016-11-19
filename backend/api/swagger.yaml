@@ -257,6 +257,10 @@ definitions:
     properties:
       id:
         type: string
+      clientId:
+        type: string
+      projectId:
+        type: string
       title:
         type: string
       priority: 
