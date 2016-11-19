@@ -38,7 +38,8 @@ export default class Project {
 	}
 	
 	toggleDone(id) {
-		//TODO(rest api)
+		fetch('http://localhost:8080/api/projects/' + this.projectId + '/issues/' + id + '/toggle')
+			.catch(err => console.log(err));
 		this.issues.forEach((cur, idx, arr) => arr[idx].done = (cur.done || cur.id === id) && !(cur.done && cur.id === id));
 		this.save();
 	}

@@ -28,5 +28,11 @@ storage.init().then(function() {
 		var issues = storage.getItemSync(args.id.value) || [];  
 		res.end((issues || []));
 	}
-
+	
+	exports.toggleIssue = function(args, res, next) {
+		var issues = storage.getItemSync(args.pId.value) || [];  
+		issues.forEach((cur, idx, arr) => arr[idx].done = (cur.done || cur.id === id) && !(cur.done && cur.id === id));
+		storage.setItem(args.pId.value, issues);
+		res.end();
+	}
 });

@@ -20,3 +20,6 @@ module.exports.getIssues = function getIssues(req, res, next) {
 	Issue.getIssues(req.swagger.params, res, next);
 };
 
+module.exports.toggleIssue = function toggleIssue(req, res, next) {
+	Issue.toggleIssue(req.swagger.params, res, next);
+}

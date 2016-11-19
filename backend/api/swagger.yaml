@@ -203,6 +203,31 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /projects/{pId}/issues/{id}/toggle:
+    x-swagger-router-controller: Issue
+    post: 
+      tags:
+        - issue
+      description: Toggles doen state of the issue with the id.
+      operationId: toggleIssue
+      parameters:
+        - name: pId
+          type: string
+          in: path
+          required: true
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 definitions:
