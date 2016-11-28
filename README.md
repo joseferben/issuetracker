@@ -19,4 +19,4 @@ You need to install webpack *npm i webpack -g*, then run *npm i*.
 Run *npm run serve* and open *http://localhost:8080*.
 
 # Backend
-In the project root run *cd backend && node run server.js*. You can browser the documentation of the API under *http://localhost:8081/docs*.
+In the project root run *cd backend && node run server.js*. You can browse the documentation of the API under *http://localhost:8081/docs*.
