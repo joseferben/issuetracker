@@ -21,14 +21,23 @@
             </ul>
             <form class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="project-name" placeholder="Project name">
+                    <input type="text" class="form-control" name="project-name" placeholder="Project name" >
                 </div>
-                <button type="submit" class="btn btn-dark">Create</button>
+                <button type="submit" class="btn btn-dark" onclick={ parent.addProject }>Create</button>
             </form>
         </div>
     </div>
 </nav>
 <script>
-this.projects = Object.keys(JSON.parse(localStorage.getItem('projects') || '{}'));
+this.projects = Object.keys(JSON.parse(localStorage.getItem('projects') || '[]'));
+
+this.setProjects = function(projects) {
+	this.projects = projects;
+	console.log('them projects: ', this.projects);
+}
+
+fetch('http://localhost:8080/api/projects/').then(res => res.json()).then(res => this.setProjects(res.projects)).catch(err => console.log(err));
+
+
 </script>
 </Navigation>

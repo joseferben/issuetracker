@@ -3,8 +3,7 @@ var storage  = require('node-persist');
 
 storage.init().then(function() {
 	exports.addIssue = function(args, res, next) {
-		var issues = JSON.parse(storage.getItemSync(args.id.value)) || [];
-		console.log(issues);
+		var issues = JSON.parse(storage.getItemSync(args.id.value) || '[]');
 		issues.push(args.issue.value);
 		storage.setItem(args.id.value, issues);
 		res.end();
