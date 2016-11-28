@@ -2,7 +2,7 @@
 This is an issue tracker made during the course WEB3 at ZHAW (Zuercher Hochschule der Angewandten Wissenschaften).
 
 # Features
-- Frontend built using riotjs and Bootstrap
+1. Frontend built using riotjs and Bootstrap
 ..*  riotjs routing
 ..*  mocha testing
 ..* fetch API 
