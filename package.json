@@ -44,7 +44,7 @@
     "serveAtHome": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.1.153",
     "serveAtWork": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.88.162",
     "serve": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors",
-    "badServe": "node http.js"
+   "badServe": "node http.js"
   },
   "repository": {
     "type": "git",
