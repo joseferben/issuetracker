@@ -44,7 +44,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
-    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress && node ./backend/server.js",
     "serveAtHome": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.1.153",
     "serveAtWork": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.88.162",
     "serve": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors",
