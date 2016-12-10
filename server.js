@@ -7,7 +7,7 @@ module.exports = {
 		const indexPath = path.join(__dirname, './app/index.html')
 		const publicPath = express.static(path.join(__dirname, './app'))
 
-		app.use('/app', publicPath)
+		app.use('./app', publicPath)
 		app.get('/', function (_, res) { res.sendFile(indexPath) })
 
 		return app
