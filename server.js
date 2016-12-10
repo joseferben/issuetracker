@@ -5,7 +5,7 @@ module.exports = {
 	app: function () {
 		const app = express()
 
-		app.use('/', express.static('app'));
+		app.use(express.static(__dirname + '/app'));
 		return app
 	}
 }
