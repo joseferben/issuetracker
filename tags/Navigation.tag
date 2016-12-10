@@ -1,3 +1,4 @@
+import uuid from 'uuid';
 <Navigation>
 <nav class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
@@ -21,28 +22,58 @@
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" placeholder="Project name" >
                 </div>
-                <button type="button" class="btn btn-dark" onclick={ parent.addProject.bind(this) }>Create</button>
+                <button type="button" class="btn btn-dark" onclick={ addProject.bind(this) }>Create</button>
             </form>
         </div>
     </div>
 </nav>
 <script>
-	this.on('mount', () => {
-		let projects = JSON.parse(localStorage.getItem('projects') || '{}');
-		this.projects = Object.keys(projects).map(cur => ({id: cur, title: projects[cur].title}));
-
-		fetch('http://localhost:8080/api/projects/').then(res => res.json()).then(res => this.setProjectIds(res.projects)).catch(err => console.log(err));
+	let tag = this;
+	tag.on('mount', () => {
+		console.log('Navigation got mounted');
+		tag.updateProjects();
 	});
 
-	this.setProjectIds = function(projectIds) {
-		let projects = projectIds.map(cur => fetch('http://localhost:8080/api/projects/' + cur).then(res => res.json()).catch(err => console.log(err)));
-		Promise.all(projects).then(arr => this.setProjects(arr));
+	tag.on('update', () => {
+		console.log('Navigation got updated');
+	});
+
+	tag.addProject = function() {
+		let project = {
+			id: uuid.v1(),
+			title: tag.projectform.title.value,
+			issues: []
+		}
+		let projects = JSON.parse(localStorage.getItem('projects') || '{}');
+		projects[project.id] = project;
+		localStorage.setItem('projects', JSON.stringify(projects));
+		tag.updateProjects();
+		fetch('http://localhost:8080/api/projects/', 
+			{
+				method: 'POST',
+				body: JSON.stringify(project),
+				headers: { 'Content-Type': 'application/json' }
+			}).then(res => console.log('Project added to backend')).then(cur => this.update()).catch(err => console.log(err));
 	}
 
-	this.setProjects = function(projects) {
-		this.projects = projects;
-		this.update();
+
+	tag.updateProjects = function() {
+		let projects = JSON.parse(localStorage.getItem('projects') || '{}');
+		tag.projects = Object.keys(projects).map(cur => ({id: cur, title: projects[cur].title}));
+		tag.update();
+		console.log('LocalStorage:', tag.projects);
+		fetch('http://localhost:8080/api/projects/').then(res => res.json()).then(res => tag.setProjectIds(res.projects)).catch(err => console.log(err));
 	}
+	tag.setProjectIds = function(projectIds) {
+		let projects = projectIds.map(cur => fetch('http://localhost:8080/api/projects/' + cur).then(res => res.json()).catch(err => console.log(err)));
+		Promise.all(projects).then(arr => tag.setProjects(arr));
+	}
+
+	tag.setProjects = function(projects) {
+		console.log('Backend: ',  projects);
+		tag.projects = projects;
+		tag.update();
+}
 
 </script>
 </Navigation>
