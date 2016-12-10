@@ -11,33 +11,38 @@
                        aria-haspopup="true"
                        aria-expanded="false">Choose project <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-			<NavigationItem></NavigationItem>
-                        <li><a href="#{ this.projects[0] }">Project 1</a></li>
-                        <li><a href="#{ this.projects[1] }">Project 2</a></li>
-                        <li><a href="#{ this.projects[2] }">Project 3</a></li>
-                        <li><a href="#{ this.projects[3] }">Project 4</a></li>
+			    <li each={ this.projects }>
+				    <a href="#{ id }">{ title }</a>
+			    </li>
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right">
+            <form id="projectform" class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="project-name" placeholder="Project name" >
+                    <input type="text" class="form-control" name="title" placeholder="Project name" >
                 </div>
-                <button type="submit" class="btn btn-dark" onclick={ parent.addProject }>Create</button>
+                <button type="button" class="btn btn-dark" onclick={ parent.addProject.bind(this) }>Create</button>
             </form>
         </div>
     </div>
 </nav>
 <script>
-this.projects = Object.keys(JSON.parse(localStorage.getItem('projects') || '[]'));
+	this.on('mount', () => {
+		let projects = JSON.parse(localStorage.getItem('projects') || '{}');
+		this.projects = Object.keys(projects).map(cur => ({id: cur, title: projects[cur].title}));
 
-this.setProjects = function(projects) {
-	this.projects = projects;
-	console.log('them projects: ', this.projects);
-}
+		fetch('http://localhost:8080/api/projects/').then(res => res.json()).then(res => this.setProjectIds(res.projects)).catch(err => console.log(err));
+	});
 
-fetch('http://localhost:8080/api/projects/').then(res => res.json()).then(res => this.setProjects(res.projects)).catch(err => console.log(err));
+	this.setProjectIds = function(projectIds) {
+		let projects = projectIds.map(cur => fetch('http://localhost:8080/api/projects/' + cur).then(res => res.json()).catch(err => console.log(err)));
+		Promise.all(projects).then(arr => this.setProjects(arr));
+	}
 
+	this.setProjects = function(projects) {
+		this.projects = projects;
+		this.update();
+	}
 
 </script>
 </Navigation>

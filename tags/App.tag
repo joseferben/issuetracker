@@ -31,19 +31,18 @@ import Navigation from './Navigation.tag';
 	this.addProject = function() {
 		let project = {
 			id: uuid.v1(),
+			title: this.projectform.title.value,
 			issues: []
 		}
 		let projects = JSON.parse(localStorage.getItem('projects') || '{}');
 		projects[project.id] = project;
-		localStorage.setItem('projets', JSON.stringify(projects));
+		localStorage.setItem('projects', JSON.stringify(projects));
 		fetch('http://localhost:8080/api/projects/', 
 			{
 				method: 'POST',
 				body: JSON.stringify(project),
 				headers: { 'Content-Type': 'application/json' }
 			}).catch(err => console.log(err));
-
-		console.log("adding project");
 		this.update();
 	}
 </script>

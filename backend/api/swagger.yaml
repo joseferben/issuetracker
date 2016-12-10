@@ -258,8 +258,11 @@ definitions:
   Project:
     required: 
       - id
+      - title
     properties:
       id:
+        type: string
+      title:
         type: string
       issues:
         type: array

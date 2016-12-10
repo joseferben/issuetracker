@@ -3,7 +3,11 @@ var storage = require('node-persist');
 
 storage.init().then(function() {
 	exports.addProject = function(args, res, next) {
-		storage.setItem(args.project.value.id, JSON.stringify(args.project.value.issues || []));
+		var project = { 
+			title: args.project.value.title,
+			issues: args.project.value.issues || []
+		}
+		storage.setItem(args.project.value.id, project) ;
 		res.end();
 	}
 
@@ -26,8 +30,10 @@ storage.init().then(function() {
 });
 
 function getProject(storage, id) {
+	var project = storage.getItemSync(id) || {};
 	return {
 		id: id,
-		issues: storage.getItemSync(id)
+		title: project.title,
+		issues: project.issues
 	}
 }

@@ -36,10 +36,14 @@ export default class Project {
 		this.issues.push(issue);
 		this.save();
 	}
-	
+
 	toggleDone(id) {
-		fetch('http://localhost:8080/api/projects/' + this.projectId + '/issues/' + id + '/toggle')
-			.catch(err => console.log(err));
+		fetch('http://localhost:8080/api/projects/' + this.projectId + '/issues/' + id + '/toggle',
+			{
+				method: 'POST',
+				beody: '{}',
+				headers: { 'Content-Type': 'application/json'}
+			}).catch(err => console.log(err));
 		this.issues.forEach((cur, idx, arr) => arr[idx].done = (cur.done || cur.id === id) && !(cur.done && cur.id === id));
 		this.save();
 	}
@@ -59,7 +63,7 @@ export default class Project {
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId] : [];	
 		this.clientId = this.storage.getItem('clientId') || '';
-		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => res.json()).then(res => this.setIssues(JSON.parse(res.issues))).catch(err => console.log(err));
+		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => res.json()).then(res => this.setIssues(res.issues)).catch(err => console.log(err));
 	}
 
 	initClientId() {
