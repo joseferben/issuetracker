@@ -6,6 +6,7 @@ export default class Project {
 		}
 		this.storage = storage;
 		this.issues = [];
+		this.title = '';
 		this.initClientId();
 	}
 
@@ -62,6 +63,7 @@ export default class Project {
 	fetch() {
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		this.issues = projects != null && projects[this.projectId] != null ? projects[this.projectId].issues : [];	
+		this.title = projects != null && projects[this.projectId] != null ? projects[this.projectId].title : '';
 		this.clientId = this.storage.getItem('clientId') || '';
 		fetch('http://localhost:8080/api/projects/' + this.projectId).then(res => res.json()).then(res => this.setIssues(res.issues)).catch(err => console.log(err));
 	}

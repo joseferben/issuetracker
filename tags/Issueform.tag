@@ -3,7 +3,7 @@ import uuid from 'uuid'
 <form id='issueform'>
     <div class="row">
         <div class="col-xs-12">
-            <span><h3>Create Issue</h3></span>
+            <span><h3>Create Issue {opts.issues.title != '' ? ' - ' + opts.issues.title : ''}</h3></span>
             <hr style="width: 100%; color: black; height: 1px; background-color:black;"/>
         </div>
     </div>
@@ -40,6 +40,7 @@ import uuid from 'uuid'
 <script>
 	let tag = this,
 		issues = opts.issues;
+	console.log(issues);
 
 	tag.submit = () => {
 		if (tag.issueform.title.value !== '') {
