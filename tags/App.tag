@@ -9,6 +9,7 @@ import Navigation from './Navigation.tag';
 			<div class="container">
 				<Issueform issues={ this.project }></Issueform>
 				<Issuetable issues={ this.project }></Issuetable>
+				<button type="button" class="btn { this.project.title == '' ? ' hide ' : '' } btn-danger btn-lg" onclick={ this.removeProject }> <span class="glyphicon glyphicon-trash"></span> Remove project</button>
 			</div>
 		</div>
 <script>
@@ -28,5 +29,10 @@ import Navigation from './Navigation.tag';
 		this.update();
 	});
 
+	this.removeProject = function() {
+		this.project.remove() 
+		this.update();
+		riot.route('/');
+	}
 </script>
 </App>

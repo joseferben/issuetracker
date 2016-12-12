@@ -35,6 +35,7 @@ import uuid from 'uuid';
 	});
 
 	tag.on('update', () => {
+		this.updateProjects();
 		console.log('Navigation got updated');
 	});
 
@@ -53,27 +54,24 @@ import uuid from 'uuid';
 				method: 'POST',
 				body: JSON.stringify(project),
 				headers: { 'Content-Type': 'application/json' }
-			}).then(res => console.log('Project added to backend')).then(cur => this.update()).catch(err => console.log(err));
+			}).then(res => console.log('Project added to backend')).catch(err => console.log(err));
 	}
 
 
 	tag.updateProjects = function() {
 		let projects = JSON.parse(localStorage.getItem('projects') || '{}');
 		tag.projects = Object.keys(projects).map(cur => ({id: cur, title: projects[cur].title}));
-		tag.update();
-		console.log('LocalStorage:', tag.projects);
 		fetch('http://localhost:8080/api/projects/').then(res => res.json()).then(res => tag.setProjectIds(res.projects)).catch(err => console.log(err));
 	}
+
 	tag.setProjectIds = function(projectIds) {
 		let projects = projectIds.map(cur => fetch('http://localhost:8080/api/projects/' + cur).then(res => res.json()).catch(err => console.log(err)));
 		Promise.all(projects).then(arr => tag.setProjects(arr));
 	}
 
 	tag.setProjects = function(projects) {
-		console.log('Backend: ',  projects);
-		tag.projects = projects;
-		tag.update();
-}
+		this.projects = projects;
+	}
 
 </script>
 </Navigation>
