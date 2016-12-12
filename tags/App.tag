@@ -30,7 +30,7 @@ import Navigation from './Navigation.tag';
 	});
 
 	this.removeProject = function() {
-		this.project.remove() 
+		this.project.removeProject() 
 		this.update();
 		riot.route('/');
 	}

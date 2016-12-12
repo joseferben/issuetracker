@@ -55,7 +55,7 @@ export default class Project {
 		this.save();
 	}
 
-	remove() {
+	removeProject() {
 		fetch('http://localhost:8080/api/projects/' + this.projectId, { method: 'DELETE' }).catch(err => console.log(err));
 		let projects = JSON.parse(this.storage.getItem('projects') || '{}');
 		delete projects[this.projectId];
