@@ -23,7 +23,7 @@
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.9.0",
-    "http": "0.0.0",
+    "immutable": "^3.8.1",
     "imports-loader": "^0.6.5",
     "jquery": "^3.1.1",
     "js-yaml": "^3.7.0",
@@ -45,7 +45,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
-    "backend": "node ./backend/server.js",    
+    "backend": "node ./backend/server.js",
     "serveAtHome": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.1.153",
     "serveAtWork": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.88.162",
     "serve": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors",
