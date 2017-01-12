@@ -1,0 +1,9 @@
+const ActionTypes = {
+    ADD_ISSUE: 'ADD_ISSUE',
+    DELETE_ISSUE: 'DELETE_ISSUE',
+    TOGGLE_ISSUE: 'TOGGLE_ISSUE',
+    ADD_PROJECT: 'ADD_PROJECT',
+    DELETE_PROJECT: 'DELETE_PROJECT',
+}
+
+export default ActionTypes;
