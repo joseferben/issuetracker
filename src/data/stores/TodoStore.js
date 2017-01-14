@@ -17,10 +17,11 @@ export default class TodoStore extends ReduceStore {
     }
 
     reduce(state, action) {
+        console.log(`Received action ${action.get('type')}`);
         switch (action.get('type')) {
             case actionTypes.ADD_ISSUE:
                 if (!action.getIn(['issue', 'title'])) return state;
-                return state.setIn([action.projectId, 'issues', '1'], action.issue);
+            return state.setIn([action.projectId, 'issues', action.get('issue').get('id')], action.issue);
 
             case actionTypes.DELETE_ISSUE:
                 return state.deleteIn([this._getProjectId(state, action.get('id')), 'issues', action.get('id')]);

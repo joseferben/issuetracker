@@ -1,4 +1,6 @@
 require('./Issue.tag');
+const action = require('../src/data/IssueTrackerActions.js');
+
 <issuetable>
     <table class="table top-buffer">
         <thead>
@@ -11,22 +13,28 @@ require('./Issue.tag');
             </tr>
         </thead>
         <tbody>
-            <tr each={ issues.getAll() } data-is="issue"></tr>
+            <tr each={ this.issues } data-is="issue"></tr>
         </tbody>
     </table>
     <script>
-        this.toggle = (evt) => {
-            this.issues.toggleDone(evt.item.id);
-            this.update();
-        }
 
-        this.remove = (evt) => {
-            this.issues.remove(evt.item.id);
-            this.update();
-        }
+     let store = opts.store,
+         projectId = opts.projectId;
 
-        this.on('update', () => {
-            this.issues = opts.issues;
-        })
+     this.toggle = (evt) => {
+         action.toggleIssue(evt.item.id);
+         this.update();
+     };
+
+     this.remove = (evt) => {
+         action.deleteIssue(evtl.item.id);
+         this.update();
+     };
+
+     this.on('update', () => {
+         let issuesMap = store.getState().getIn([projectId, 'issues']);
+         this.issues = issuesMap != null ? issuesMap.toArray() : []; 
+     });
+
     </script>
 </issuetable>

@@ -1,3 +1,5 @@
+import {EventEmitter} from 'fbemitter';
+
 export default class Store {
 
     constructor(dispatcher) {
@@ -6,7 +8,7 @@ export default class Store {
         this.changeEvent = 'change';
         this.callbacks = {};
         this.id = 0;
-        this.emitter = {}; //TODO: Plugin riotjs event system
+        //this.emitter = new EventEmitter(); //TODO(Implement eventing)
         this.dispatchToken = dispatcher.register((payload) => {
             this._invokeOnDispatch(payload);
         });
@@ -39,7 +41,7 @@ export default class Store {
         this.changed = false;
         this._onDispatch(payload);
         if (this.changed) {
-            this.emitter.emit(this.changeEvent);
+            //TODO(Eventing) this.emitter.emit(this.changeEvent);
         }
     }
 

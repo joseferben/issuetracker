@@ -1,6 +1,6 @@
 <issue>
     <td>
-        <label class="checkbox-inline"><input type="checkbox" checked={ done } onclick={ parent.toggle } value=""></label>
+        <label class="checkbox-inline"><input type="checkbox" checked={ opts.done } onclick={ parent.toggle } value=""></label>
     </td>
     <td>
         { title }

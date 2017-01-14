@@ -1,4 +1,6 @@
-import uuid from 'uuid'
+import uuid from 'uuid';
+import action from '../src/data/IssueTrackerActions.js';
+
 <issueform>
     <form id='issueform'>
         <div class="row">
@@ -38,11 +40,13 @@ import uuid from 'uuid'
     </form>
     <script>
         let tag = this,
-            project = opts.project;
+            store = opts.store,
+            projectId = opts.projectId;
 
         tag.submit = () => {
             if (tag.issueform.title.value !== '') {
-                project.add({
+                action.addIssue({
+                    projectId: opts.projectId,
                     id: uuid.v1(),
                     title: tag.issueform.title.value,
                     priority: tag.issueform.prio.value,
