@@ -1,5 +1,5 @@
-require('./Issue.tag');
-const actions = require('../src/data/IssueTrackerActions.js');
+import issue from './Issue.tag';
+import actions from '../src/data/IssueTrackerActions.js';
 
 <issuetable>
     <table class="table top-buffer">
@@ -19,7 +19,8 @@ const actions = require('../src/data/IssueTrackerActions.js');
     <script>
 
      this.on('update', () => {
-         let issuesMap = opts.store.getState().getIn([opts.projectid, 'issues']);
+         let state = opts.store.getState();
+         let issuesMap = state.getIn([state.get('active'), 'issues']);
          this.issues = issuesMap != null ? issuesMap.toArray() : []; 
      });
 

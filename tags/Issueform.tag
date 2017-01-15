@@ -44,8 +44,7 @@ import action from '../src/data/IssueTrackerActions.js';
      tag.submit = () => {
          if (tag.issueform.title.value !== '') {
              action.addIssue({
-                 projectId: opts.projectid,
-                 id: uuid.v1(),
+                 projectId: opts.store.getState().get('active'),
                  title: tag.issueform.title.value,
                  priority: tag.issueform.prio.value,
                  duedate: tag.issueform.date.value,

@@ -34,6 +34,11 @@ const Actions = {
     deleteProject(id) {
         console.log(`Action fired: deleteProject(${id})`);
         dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.DELETE_PROJECT).set('id', id));
+    },
+
+    changeProject(id) {
+        console.log(`Action fired: changeProject(${id})`);
+        dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.CHANGE_PROJECT).set('id', id));
     }
 }
 

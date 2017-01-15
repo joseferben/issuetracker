@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+
 import Issueform from './Issueform.tag';
 import Issuetable from './Issuetable.tag';
 import Project from '../src/Project.js';
@@ -9,9 +10,9 @@ import TodoStore from '../src/data/stores/TodoStore.js';
     <Navigation store={ this.store }></Navigation>
     <div class="jumbotron">
         <div class="container">
-            <Issueform projectid={ this.projectId } store={ this.store }></Issueform>
-            <Issuetable projectid={ this.projectId } store={ this.store }></Issuetable>
-            <button type="button" class="btn { this.project.title == '' ? ' hide ' : '' } btn-danger btn-lg" onclick={ this.removeProject }> <span class="glyphicon glyphicon-trash"></span> Remove project</button>
+            <Issueform store={ this.store }></Issueform>
+            <Issuetable store={ this.store }></Issuetable>
+            <button type="button" class="btn { this.store.getState().get('active') == '' ? ' hide ' : '' } btn-danger btn-lg" onclick={ removeProject }> <span class="glyphicon glyphicon-trash"></span> Remove project</button>
         </div>
     </div>
 
@@ -25,19 +26,16 @@ import TodoStore from '../src/data/stores/TodoStore.js';
      });
 
      riot.route(projectId => {
-         this.projectId = projectId;
-         console.log("updated project id to: ", projectId);
+         actions.changeProject(projectId);
          this.update();
      });
 
      this.on('mount', function() {
          console.log('fetching collection for project');
-         this.update();
      });
 
      this.removeProject = function() {
-         actions.deleteProject(this.projectId);
-         this.update();
+         actions.deleteProject(this.store.getState().get('active'));
          riot.route('/');
      }
     </script>

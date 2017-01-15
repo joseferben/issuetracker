@@ -5,32 +5,38 @@ import assert from 'assert';
 
 describe('TodoStore', () => {
     describe('_getProjectId()', () => {
-        it('should return project id if when issue with id is present', (done) => {
+        it('should return project id when issue with id is present', (done) => {
             let sut = new TodoStore();
             let beginState = Immutable.OrderedMap().setIn([1, 'issues', 42, 'done'], false);
-            let expectedId = 1;
 
-            assert.equal(sut._getProjectId(beginState, 42), expectedId);
+            assert.equal(sut._getProjectId(beginState, 42), 1);
             done();
         });
 
-        it('should return -1 if when issue with id is not present', (done) => {
+        it('should return undefined  when issue with id is not present', (done) => {
             let sut = new TodoStore();
             let beginState = Immutable.OrderedMap().setIn([1, 'issues', 31, 'done'], false);
-            let expectedId = undefined;
 
-            assert.equal(sut._getProjectId(beginState, 42), expectedId);
+            assert.equal(sut._getProjectId(beginState, 42), undefined);
             done();
         });
     });
 
+    describe('getInitialState()', () => {
+        it('should return empty ordered map', (done) => {
+            let sut = new TodoStore();
+
+            assert.equal(sut.getInitialState(), Immutable.OrderedMap());
+            done();
+        });
+    });
 
     describe('reduce()', () => {
-        it('should return initial state when no action given', (done) => {
+        it('should return initial state when state is initial state and no action is fired', (done) => {
             let sut = new TodoStore();
             let expectedState = Immutable.OrderedMap();
 
-            assert.equal(sut.getInitialState(), expectedState);
+            assert.equal(sut.getInitialState(), Immutable.OrderedMap());
             done();
         });
 
@@ -57,7 +63,7 @@ describe('TodoStore', () => {
             done();
         });
 
-        it('should delete issue when id matches with existing issue', (done) => {
+        it('should delete issue when action DELETE_ISSUE with matching id of existing issue is fired', (done) => {
             let sut = new TodoStore();
 
             let beginState = Immutable.OrderedMap().setIn([1, 'issues', 1, 'title'], 'whatever');
@@ -68,7 +74,7 @@ describe('TodoStore', () => {
             done();
         });
 
-        it('should toggle issue when id matches with existing', (done) => {
+        it('should toggle issue when action TOGGLE_ISSUE with matching id of existing issue is fired', (done) => {
             let sut = new TodoStore();
 
             let beginState = Immutable.OrderedMap().setIn([1, 'issues', 1, 'done'], true);
@@ -80,7 +86,7 @@ describe('TodoStore', () => {
             done();
         });
 
-        it('should add project when action with project payload fires', (done) => {
+        it('should add project when action ADD_PROJECT with valid project id is fired', (done) => {
             let sut = new TodoStore();
 
             let beginState = Immutable.OrderedMap();
@@ -91,7 +97,7 @@ describe('TodoStore', () => {
             done();
         });
 
-        it('should delete project when action with project id fires', (done) => {
+        it('should delete project when action DELETE_PROJECT with matching id of existing project is fired', (done) => {
             let sut = new TodoStore();
 
             let beginState = Immutable.OrderedMap().setIn([1, 'issues'], Immutable.OrderedMap());

@@ -1,7 +1,7 @@
 import actions from '../src/data/IssueTrackerActions.js';
 <issue>
     <td>
-        <label class="checkbox-inline"><input type="checkbox" checked={ issue.get('done') } onclick={ parent.toggle } value=""></label>
+        <label class="checkbox-inline"><input type="checkbox" checked={ issue.get('done') } onclick={ toggle } value=""></label>
     </td>
     <td>
         { issue.get('title') }
@@ -19,11 +19,11 @@ import actions from '../src/data/IssueTrackerActions.js';
     </td>
     <script>
         this.remove = (evt) => {
-            actions.deleteIssue(evt.item.id);
+            actions.deleteIssue(evt.item.issue.get('id'));
         };
 
         this.toggle = (evt) => {
-            actions.toggleIssue(evt.item.id);
+            actions.toggleIssue(evt.item.issue.get('id'));
         };
     </script>
 </issue>

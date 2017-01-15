@@ -4,6 +4,7 @@ const ActionTypes = {
     TOGGLE_ISSUE: 'TOGGLE_ISSUE',
     ADD_PROJECT: 'ADD_PROJECT',
     DELETE_PROJECT: 'DELETE_PROJECT',
+    CHANGE_PROJECT: 'CHANGE_RPOJECT',
 }
 
 export default ActionTypes;
