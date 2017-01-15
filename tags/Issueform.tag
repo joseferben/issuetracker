@@ -39,24 +39,22 @@ import action from '../src/data/IssueTrackerActions.js';
         </div>
     </form>
     <script>
-        let tag = this,
-            store = opts.store,
-            projectId = opts.projectId;
+     let tag = this;
 
-        tag.submit = () => {
-            if (tag.issueform.title.value !== '') {
-                action.addIssue({
-                    projectId: opts.projectId,
-                    id: uuid.v1(),
-                    title: tag.issueform.title.value,
-                    priority: tag.issueform.prio.value,
-                    duedate: tag.issueform.date.value,
-                    done: false
-                });
-            }
-            tag.issueform.title.value = '';
-            tag.issueform.prio.value = '';
-            tag.issueform.date.value = '';
+     tag.submit = () => {
+         if (tag.issueform.title.value !== '') {
+             action.addIssue({
+                 projectId: opts.projectid,
+                 id: uuid.v1(),
+                 title: tag.issueform.title.value,
+                 priority: tag.issueform.prio.value,
+                 duedate: tag.issueform.date.value,
+                 done: false
+             });
+         }
+         tag.issueform.title.value = '';
+         tag.issueform.prio.value = '';
+         tag.issueform.date.value = '';
         }
     </script>
 </issueform>

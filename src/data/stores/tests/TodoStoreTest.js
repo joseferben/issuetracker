@@ -34,23 +34,22 @@ describe('TodoStore', () => {
             done();
         });
 
-        it('should add issue when action ADD_ISSUE with title is given', (done) => {
+        it('should add issue when action ADD_ISSUE with title is fired', (done) => {
             let sut = new TodoStore();
 
-            let beginState = Immutable.OrderedMap().setIn([1, 'issues'], []);
-            let expectedState = Immutable.OrderedMap().setIn([1, 'issues', 1], {
-                title: "whatever"
-            });
+            let beginState = Immutable.OrderedMap().setIn([1, 'issues'], Immutable.OrderedMap());
+            let issue = Immutable.OrderedMap().set('title', 'whatever');
 
-            let action = Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE).set('projectId', 1).setIn(['issue', 'title'], 'whatever');
-            assert.equal(sut.reduce(beginState, action).get(0), expectedState.get(0));
+            let action = Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE).set('projectId', 1).set('issue', issue);
+
+            assert.equal(sut.reduce(beginState, action).getIn([1, 'issues']).toArray()[0].get('title'), 'whatever');
             done();
         });
 
-        it('should not add issue when action ADD_ISSUE without title is given', (done) => {
+        it('should not add issue when action ADD_ISSUE without title is fired', (done) => {
             let sut = new TodoStore();
 
-            let beginState = Immutable.OrderedMap().setIn([1, 'issues'], []);
+            let beginState = Immutable.OrderedMap().setIn([1, 'issues'], Immutable.OrderedMap());
 
             let action = Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE).set('projectId', 1).setIn(['issue', 'title'], '');
 

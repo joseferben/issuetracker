@@ -27,8 +27,8 @@ import actions from '../src/data/IssueTrackerActions.js';
         </div>
     </nav>
     <script>
+
      let store = opts.store;
-     
      this.addProject = () => {
             actions.addProject(this.projectform.title.value);
         };
@@ -36,5 +36,6 @@ import actions from '../src/data/IssueTrackerActions.js';
      this.on('update', () => {
          this.projects = store.getState().toArray();
      });
+
     </script>
 </Navigation>

@@ -6,13 +6,13 @@ import Immutable from 'immutable';
 const Actions = {
     addIssue(opts) {
         console.log(`Action fired: addIssue(${opts.title}, ${opts.priority}, ${opts.duedate}, ${opts.done})`);
-        let issue = {
-            title: opts.title || '',
-            priority: opts.priority || '',
-            duedate: opts.priority || '',
-            done: false,
-        };
-        dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE).set('project', opts.projectId).set('issue', issue));
+        let issue = Immutable.OrderedMap()
+            .set('title', opts.title)
+            .set('priority', opts.priority)
+            .set('duedate', opts.duedate)
+            .set('done', opts.duedate);
+
+        dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE).set('projectId', opts.projectId).set('issue', issue));
     },
 
 

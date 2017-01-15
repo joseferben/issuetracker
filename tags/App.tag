@@ -9,8 +9,8 @@ import TodoStore from '../src/data/stores/TodoStore.js';
     <Navigation store={ this.store }></Navigation>
     <div class="jumbotron">
         <div class="container">
-            <Issueform projectId={ this.projectid } store={ this.store }></Issueform>
-            <Issuetable projectId={ this.projectId } store={ this.store }></Issuetable>
+            <Issueform projectid={ this.projectId } store={ this.store }></Issueform>
+            <Issuetable projectid={ this.projectId } store={ this.store }></Issuetable>
             <button type="button" class="btn { this.project.title == '' ? ' hide ' : '' } btn-danger btn-lg" onclick={ this.removeProject }> <span class="glyphicon glyphicon-trash"></span> Remove project</button>
         </div>
     </div>
@@ -20,7 +20,7 @@ import TodoStore from '../src/data/stores/TodoStore.js';
      riot.route.stop();
      riot.route.start(true);
      riot.route(projectId => {
-         this.id = projectId;
+         this.projectId = projectId;
          console.log("updated project id to: ", projectId);
          this.update();
      });
