@@ -19,6 +19,11 @@ import TodoStore from '../src/data/stores/TodoStore.js';
      this.store = new TodoStore();
      riot.route.stop();
      riot.route.start(true);
+
+     this.store.emitter.addListener('change', () => {
+         this.update();
+     });
+
      riot.route(projectId => {
          this.projectId = projectId;
          console.log("updated project id to: ", projectId);

@@ -20,7 +20,8 @@ export default class TodoStore extends ReduceStore {
         switch (action.get('type')) {
             case actionTypes.ADD_ISSUE:
             if (!action.getIn(['issue', 'title'])) return state;
-            return state.setIn([action.get('projectId'), 'issues', uuid.v1()], action.get('issue'));
+            let issueId = uuid.v1();
+            return state.setIn([action.get('projectId'), 'issues', issueId], action.get('issue').set('id', issueId));
 
             case actionTypes.DELETE_ISSUE:
                 return state.deleteIn([this._getProjectId(state, action.get('id')), 'issues', action.get('id')]);
@@ -30,8 +31,8 @@ export default class TodoStore extends ReduceStore {
 
             case actionTypes.ADD_PROJECT:
                 if (!action.get('title')) return state;
-                let id = uuid.v1();
-                return state.setIn([id, 'title'], action.get('title')).setIn([id, 'id'], id);
+                let projectId = uuid.v1();
+                return state.setIn([projectId, 'title'], action.get('title')).setIn([projectId, 'id'], projectId);
 
             case actionTypes.DELETE_PROJECT:
                 return state.delete(action.get('id'));

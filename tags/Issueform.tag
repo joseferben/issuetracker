@@ -49,7 +49,7 @@ import action from '../src/data/IssueTrackerActions.js';
                  title: tag.issueform.title.value,
                  priority: tag.issueform.prio.value,
                  duedate: tag.issueform.date.value,
-                 done: false
+                 done: false,
              });
          }
          tag.issueform.title.value = '';

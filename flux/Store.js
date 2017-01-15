@@ -8,7 +8,7 @@ export default class Store {
         this.changeEvent = 'change';
         this.callbacks = {};
         this.id = 0;
-        //this.emitter = new EventEmitter(); //TODO(Implement eventing)
+        this.emitter = new EventEmitter();
         this.dispatchToken = dispatcher.register((payload) => {
             this._invokeOnDispatch(payload);
         });
@@ -41,7 +41,7 @@ export default class Store {
         this.changed = false;
         this._onDispatch(payload);
         if (this.changed) {
-            //TODO(Eventing) this.emitter.emit(this.changeEvent);
+            this.emitter.emit(this.changeEvent);
         }
     }
 

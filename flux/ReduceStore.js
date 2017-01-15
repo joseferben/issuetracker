@@ -37,7 +37,7 @@ export default class ReduceStore extends Store {
         }
 
         if (this.changed) {
-//            this.emitter.emit(this.changeEvent); TODO(Eventing)
+            this.emitter.emit(this.changeEvent);
         }
     }
 
