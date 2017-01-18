@@ -49,8 +49,8 @@ const Actions = {
             title,
             issues: [],
         }).then(
-          res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_SUCCEED).set('title', title).set('fakeId', fakeId).set('id', res.data.id)),
-                res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_FAIL).set('fakeId', fakeId)));
+            res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_SUCCEED).set('title', title).set('fakeId', fakeId).set('id', res.data.id)),
+            res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_FAIL).set('fakeId', fakeId)));
     },
 
     deleteProject(id) {
@@ -59,7 +59,22 @@ const Actions = {
 
     changeProject(id) {
         dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.CHANGE_PROJECT).set('id', id));
+    },
+
+    populateStore() {
+        axios.get(`${baseUrl}/projects`).then(
+            res => {
+                let projects = res.data.projects.map(cur => axios.get(`${baseUrl}/projects/${cur}`));
+
+                Promise.all(projects)
+                    .then(
+                      vals => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.POPULATE_STORE).set('projects', vals.map(cur => cur.data))))
+                    .catch(
+                        err => console.log(err)
+                    );
+
+            });
     }
-}
+};
 
 export default Actions;

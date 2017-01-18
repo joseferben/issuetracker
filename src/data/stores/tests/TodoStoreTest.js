@@ -108,4 +108,38 @@ describe('TodoStore', () => {
             done();
         });
     });
+
+  describe('_toImmutableState()', () => {
+    it('should return immutable state from js object', (done) => {
+      let target = [
+        {
+          id: 1,
+          title: 'whatever1',
+          issues: [],
+        },
+        {
+          id: 2,
+          title: 'whatever2',
+          issues: [
+            {
+              id: 42,
+              done: false,
+              duedate: 'somedate',
+              priority: 'high',
+              title: whatever3,
+            },
+            {
+              id: 42,
+              done: false,
+              duedate: 'somedate',
+              priority: 'high',
+              title: whatever3,
+            },
+          ]
+        }
+      ];
+
+      let sut = new TodoStore();
+    });
+  });
 });

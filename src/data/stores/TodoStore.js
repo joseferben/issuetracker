@@ -18,6 +18,10 @@ export default class TodoStore extends ReduceStore {
 
     reduce(state, action) {
         switch (action.get('type')) {
+            case actionTypes.POPULATE_STORE:
+                let projects = action.get('projects');
+                return this._toImmutableState(projects);
+
             case actionTypes.ADD_ISSUE_START:
                 if (!action.getIn(['issue', 'title'])) return state;
                 let fakeId = action.get('id');
@@ -76,4 +80,8 @@ export default class TodoStore extends ReduceStore {
     _getProjectId(state, id) {
         return state.findKey(cur => cur.get != null && cur.get('issues') != null && cur.get('issues').has(id));
     }
+
+  _toImmutableState(projects) {
+    
+  }
 }

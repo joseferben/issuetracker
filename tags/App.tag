@@ -31,6 +31,7 @@ import TodoStore from '../src/data/stores/TodoStore.js';
      });
 
      this.on('mount', function() {
+         actions.populateStore();
          console.log('fetching collection for project');
      });
 
