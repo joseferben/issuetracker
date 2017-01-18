@@ -22,7 +22,6 @@ const Actions = {
 
         axios.post(`${baseUrl}/projects/${projectId}/issues`, {
             clientId: "",
-            id: fakeId,
             projectId,
             title: opts.title,
             priority: opts.priority,
