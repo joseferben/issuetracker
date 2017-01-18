@@ -126,20 +126,25 @@ describe('TodoStore', () => {
               done: false,
               duedate: 'somedate',
               priority: 'high',
-              title: whatever3,
+              title: 'whatever3',
             },
             {
-              id: 42,
+              id: 43,
               done: false,
               duedate: 'somedate',
               priority: 'high',
-              title: whatever3,
+              title: 'whatever4',
             },
           ]
         }
       ];
 
-      let sut = new TodoStore();
+      let state = TodoStore._toImmutableState(target);
+
+      assert.ok(state.getIn([1, 'issues']).isEmpty());
+      assert.equal(state.getIn([2, 'issues', 42, 'title']), 'whatever3');
+      assert.equal(state.getIn([2, 'issues', 43, 'title']), 'whatever4');
+      done();
     });
   });
 });

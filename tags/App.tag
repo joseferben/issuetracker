@@ -18,6 +18,7 @@ import TodoStore from '../src/data/stores/TodoStore.js';
 
     <script>
      this.store = new TodoStore();
+     actions.populateStore();
      riot.route.stop();
      riot.route.start(true);
 
@@ -28,11 +29,6 @@ import TodoStore from '../src/data/stores/TodoStore.js';
      riot.route(projectId => {
          actions.changeProject(projectId);
          this.update();
-     });
-
-     this.on('mount', function() {
-         actions.populateStore();
-         console.log('fetching collection for project');
      });
 
      this.removeProject = function() {

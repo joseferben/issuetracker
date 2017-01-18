@@ -22,14 +22,15 @@ const Actions = {
 
         axios.post(`${baseUrl}/projects/${projectId}/issues`, {
             clientId: "",
-            projectId: fakeId,
+            id: fakeId,
+            projectId,
             title: opts.title,
             priority: opts.priority,
             duedate: opts.duedate,
             done: opts.done,
         }).then(
             res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_SUCCEED).set('fakeId', fakeId).set('id', res.data.id).set('projectId', projectId).set('issue', issue)),
-            res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_FAIL).set('fakeId', fakeId))
+          res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_FAIL).set('fakeId', fakeId).set('projectId', projectId))
         );
     },
 
@@ -68,7 +69,7 @@ const Actions = {
 
                 Promise.all(projects)
                     .then(
-                      vals => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.POPULATE_STORE).set('projects', vals.map(cur => cur.data))))
+                        vals => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.POPULATE_STORE).set('projects', vals.map(cur => cur.data))))
                     .catch(
                         err => console.log(err)
                     );

@@ -5,9 +5,11 @@ const storage = require('node-persist'),
 storage.init().then(function() {
     exports.addIssue = function(args, res, next) {
             let project = storage.getItemSync(args.id.value) || {};
-            project.issues.push(args.issue.value);
+            let issue = args.issue.value;
             let id = uuid.v1();
-            storage.setItem(id, project);
+            issue.id = id;
+            project.issues.push(issue);
+            storage.setItem(args.id.value, project);
             res.end(JSON.stringify({
                 id: id,
             }));
