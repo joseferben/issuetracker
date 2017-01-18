@@ -28,13 +28,12 @@ import actions from '../src/data/IssueTrackerActions.js';
     </nav>
     <script>
 
-     let store = opts.store;
      this.addProject = () => {
             actions.addProject(this.projectform.title.value);
         };
 
      this.on('update', () => {
-         this.projects = store.getState().toArray();
+         this.projects = opts.store.getState().toArray();
      });
 
     </script>

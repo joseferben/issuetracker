@@ -18,21 +18,49 @@ export default class TodoStore extends ReduceStore {
 
     reduce(state, action) {
         switch (action.get('type')) {
-            case actionTypes.ADD_ISSUE:
+            case actionTypes.ADD_ISSUE_START:
                 if (!action.getIn(['issue', 'title'])) return state;
-                let issueId = uuid.v1();
-                return state.setIn([action.get('projectId'), 'issues', issueId], action.get('issue').set('id', issueId));
+                let fakeId = action.get('id');
+                return state
+                    .setIn([action.get('projectId'), 'issues', fakeId], action.get('issue').set('id', fakeId));
+
+            case actionTypes.ADD_ISSUE_SUCCEED:
+                fakeId = action.get('fakeId');
+                return state
+                    .deleteIn([action.get('projectId'), 'issues', fakeId])
+                    .setIn([action.get('projectId'), 'issues', action.get('id')],
+                        val => action.get('issue').set('id', action.get('id')));
+
+            case actionTypes.ADD_ISSUE_FAIL:
+                console.log('Failed to add issue');
+                return state
+                    .deleteIn([action.get('projectId'), 'issues', fakeId]);
 
             case actionTypes.DELETE_ISSUE:
-                return state.deleteIn([this._getProjectId(state, action.get('id')), 'issues', action.get('id')]);
+                return state
+                    .deleteIn([this._getProjectId(state, action.get('id')), 'issues', action.get('id')]);
 
             case actionTypes.TOGGLE_ISSUE:
-                return state.updateIn([this._getProjectId(state, action.get('id')), 'issues', action.get('id'), 'done'], val => !val);
+                return state
+                    .updateIn([this._getProjectId(state, action.get('id')), 'issues', action.get('id'), 'done'], val => !val);
 
-            case actionTypes.ADD_PROJECT:
+            case actionTypes.ADD_PROJECT_START:
                 if (!action.get('title')) return state;
-                let projectId = uuid.v1();
-                return state.setIn([projectId, 'title'], action.get('title')).setIn([projectId, 'id'], projectId);
+                let projectId = action.get('id');
+                return state
+                    .setIn([projectId, 'title'], action.get('title')).setIn([projectId, 'id'], projectId);
+
+            case actionTypes.ADD_PROJECT_SUCCEED:
+                fakeId = action.get('fakeId');
+                projectId = action.get('id');
+                return state
+                    .delete(fakeId)
+                    .setIn([projectId, 'title'], action.get('title')).setIn([projectId, 'id'], projectId);
+
+            case actionTypes.ADD_PROJECT_FAIL:
+                console.log('Failed to add project');
+                return state
+                    .delete(action.get('fakeId'));
 
             case actionTypes.DELETE_PROJECT:
                 return state.delete(action.get('id'));
