@@ -86,6 +86,7 @@ export default class TodoStore extends ReduceStore {
             state = state.setIn([id, 'id'], id).setIn([id, 'title'], project.title).setIn([id, 'issues'], Immutable.OrderedMap());
             for (let issue of project.issues) {
                 let newIssue = Immutable.OrderedMap()
+                    .set('id', issue.id)
                     .set('title', issue.title)
                     .set('done', issue.done)
                     .set('duedate', issue.duedate)
