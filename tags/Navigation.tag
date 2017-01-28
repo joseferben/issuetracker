@@ -33,7 +33,7 @@ import actions from '../src/data/IssueTrackerActions.js';
         };
 
      this.on('update', () => {
-         this.projects = opts.store.getState().toArray();
+         this.projects = opts.store.getState().toArray().filter(cur => typeof cur !== "string");
      });
 
     </script>

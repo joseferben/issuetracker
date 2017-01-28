@@ -20,7 +20,7 @@ export default class TodoStore extends ReduceStore {
       case actionTypes.POPULATE_STORE:
         {
           const projects = action.projects;
-          return TodoStore.toImmutableState(projects);
+          return TodoStore.toImmutableState(state, projects);
         }
 
       case actionTypes.ADD_ISSUE_START:
@@ -44,16 +44,16 @@ export default class TodoStore extends ReduceStore {
             .deleteIn([action.projectId, 'issues', action.fakeId]);
         }
 
-      case actionTypes.DELETE_ISSUE:
+      case actionTypes.DELETE_ISSUE_START:
         {
           return state
-            .deleteIn([this.getProjectId(state, action.id), 'issues', action.id]);
+            .deleteIn([TodoStore.getProjectId(state, action.id), 'issues', action.id]);
         }
 
-      case actionTypes.TOGGLE_ISSUE:
+      case actionTypes.TOGGLE_ISSUE_START:
         {
           return state
-            .updateIn([this.getProjectId(state, action.id), 'issues', action.id, 'done'], val => !val);
+            .updateIn([TodoStore.getProjectId(state, action.id), 'issues', action.id, 'done'], val => !val);
         }
 
       case actionTypes.ADD_PROJECT_START:
@@ -78,7 +78,7 @@ export default class TodoStore extends ReduceStore {
             .delete(action.fakeId);
         }
 
-      case actionTypes.DELETE_PROJECT:
+      case actionTypes.DELETE_PROJECT_START:
         {
           return state.delete(action.id);
         }
@@ -97,7 +97,7 @@ export default class TodoStore extends ReduceStore {
     return state.findKey(cur => cur.get != null && cur.get('issues') != null && cur.get('issues').has(id));
   }
 
-  static toImmutableState(projects) {
+  static toImmutableState(preState, projects) {
     let state = Immutable.OrderedMap();
 
     projects.forEach((project) => {
@@ -114,6 +114,6 @@ export default class TodoStore extends ReduceStore {
         state = state.setIn([id, 'issues', issue.id], newIssue);
       });
     });
-    return state;
+    return state.set('active', preState.get('active'));
   }
 }

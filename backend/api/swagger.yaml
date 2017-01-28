@@ -91,7 +91,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
     delete: 
       tags:
         - project
@@ -110,7 +110,47 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
+  /issues/{id}:
+    x-swagger-router-controller: Issue
+    post:
+      tags:
+        - issue
+      description: Toggles issue.
+      operationId: toggleIssueSimple
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+        - issue
+      description: Deletes issue.
+      operationId: deleteIssueSimple
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GeneralResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /projects/{id}/issues:
     x-swagger-router-controller: Issue
     get: 

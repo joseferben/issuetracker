@@ -17,9 +17,10 @@ import TodoStore from '../src/data/stores/TodoStore.js';
 
     <script>
      this.store = new TodoStore();
-     actions.populateStore();
      riot.route.stop();
      riot.route.start(true);
+
+     actions.populateStore();
 
      this.store.emitter.addListener('change', () => {
          this.update();

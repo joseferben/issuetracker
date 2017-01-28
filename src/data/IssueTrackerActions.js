@@ -13,8 +13,8 @@ const Actions = {
     const fakeId = `fake-${uuid.v1()}`;
     const projectId = opts.projectId;
     const issue = Immutable.OrderedMap()
-          .set('title', opts.title)
-          .set('priority', opts.priority)
+      .set('title', opts.title)
+      .set('priority', opts.priority)
       .set('duedate', opts.duedate)
       .set('done', opts.duedate);
 
@@ -51,16 +51,43 @@ const Actions = {
 
   deleteIssue(id) {
     dispatcher.dispatch({
-      type: actionTypes.DELETE_ISSUE,
+      type: actionTypes.DELETE_ISSUE_START,
       id,
     });
+
+    axios.delete(
+        `${baseUrl}/issues/${id}`, {
+          id,
+        }).then(
+        () => dispatcher.dispatch({
+          type: actionTypes.DELETE_ISSUE_SUCCEED,
+          id,
+        }),
+        () => dispatcher.dispatch({
+          type: actionTypes.DELETE_ISSUE_FAIL,
+          id,
+        }))
+      .catch(err => console.log(`Whoops: ${err}`));
   },
 
   toggleIssue(id) {
     dispatcher.dispatch({
-      type: actionTypes.TOGGLE_ISSUE,
+      type: actionTypes.TOGGLE_ISSUE_START,
       id,
     });
+
+    axios.post(
+      `${baseUrl}/issues/${id}`, {
+        id,
+      }).then(
+      () => dispatcher.dispatch({
+        type: actionTypes.TOGGLE_ISSUE_SUCCEED,
+        id,
+      }),
+      () => dispatcher.dispatch({
+        type: actionTypes.TOGGLE_ISSUE_FAIL,
+        id,
+      })).catch(err => console.log(`Whoops: ${err}`));
   },
 
   addProject(title) {
@@ -91,9 +118,22 @@ const Actions = {
 
   deleteProject(id) {
     dispatcher.dispatch({
-      type: actionTypes.DELETE_PROJECT,
+      type: actionTypes.DELETE_PROJECT_START,
       id,
     });
+
+    axios.delete(
+      `${baseUrl}/projects/${id}`, {
+        id,
+      }).then(
+      () => dispatcher.dispatch({
+        type: actionTypes.DELETE_PROJECT_SUCCEED,
+        id,
+      }),
+      () => dispatcher.dispatch({
+        type: actionTypes.DELETE_PROJECT_FAIL,
+        id,
+      })).catch(err => console.log(`Whoops: ${err}`));
   },
 
   changeProject(id) {

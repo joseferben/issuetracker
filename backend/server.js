@@ -4,7 +4,7 @@ const swaggerTools = require('swagger-tools');
 const jsyaml = require('js-yaml');
 const fs = require('fs');
 
-const serverPort = 8081;
+const serverPort = 8080;
 const path = require('path');
 // swaggerRouter configuration
 const options = {
@@ -13,12 +13,11 @@ const options = {
   useStubs: process.env.NODE_ENV === 'development',
 };
 
-// The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
 const spec = fs.readFileSync(path.join(__dirname, './api/swagger.yaml'), 'utf8');
 const swaggerDoc = jsyaml.safeLoad(spec);
 
-// Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
+
   app.use(middleware.swaggerMetadata());
 
   app.use(middleware.swaggerValidator());

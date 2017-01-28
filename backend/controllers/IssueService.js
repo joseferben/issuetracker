@@ -1,6 +1,16 @@
 const storage = require('node-persist');
 const uuid = require('uuid');
 
+const getProjectId = (id, db) => {
+  let projectId = 0;
+  db.values().forEach((project) => {
+    project.issues.forEach((issue) => {
+      projectId = issue.id === id ? issue.projectId : projectId;
+    });
+  });
+  return projectId;
+};
+
 storage.init().then(() => {
   exports.addIssue = (args, res) => {
     const project = storage.getItemSync(args.id.value) || {};
@@ -20,6 +30,15 @@ storage.init().then(() => {
     storage.setItem(args.pId.value, project);
     res.end();
   };
+
+  exports.deleteIssueSimple = (args, res) => {
+    const projectId = getProjectId(args.id.value, storage);
+    const project = storage.getItemSync(projectId) || {};
+    project.issues = project.issues.filter(cur => cur.id !== args.id.value);
+    storage.setItem(projectId, project);
+    res.end();
+  };
+
 
   exports.getIssue = (args, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -44,6 +63,20 @@ storage.init().then(() => {
     });
 
     storage.setItem(args.pId.value, project);
+    res.end();
+  };
+
+  exports.toggleIssueSimple = (args, res) => {
+    const projectId = getProjectId(args.id.value, storage);
+    const project = storage.getItemSync(projectId) || {};
+    const id = args.id.value;
+    project.issues.map((cur) => {
+      const val = cur;
+      val.done = (cur.done || cur.id === id) && !(cur.done && cur.id === id);
+      return val;
+    });
+
+    storage.setItem(projectId, project);
     res.end();
   };
 });
