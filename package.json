@@ -20,6 +20,12 @@
     "css-loader": "^0.25.0",
     "dirty": "^1.1.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "latest",
+    "eslint-plugin-react": "latest",
     "expose-loader": "^0.7.1",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
@@ -27,7 +33,6 @@
     "file-loader": "^0.9.0",
     "immutable": "^3.8.1",
     "imports-loader": "^0.6.5",
-    "jquery": "^3.1.1",
     "js-yaml": "^3.7.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
@@ -73,6 +78,7 @@
     "node-persist": "^2.0.7",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.2"
+    "webpack-hot-middleware": "^2.13.2",
+    "jquery": "^3.1.1"
   }
 }

@@ -3,9 +3,9 @@ const express = require('express');
 
 module.exports = {
 	app: function () {
-		const app = express()
+		const app = express();
 
 		app.use(express.static(__dirname + '/app'));
-		return app
+		return app;
 	}
-}
+};
