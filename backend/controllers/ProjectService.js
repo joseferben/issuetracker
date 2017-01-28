@@ -1,45 +1,42 @@
-'use strict';
-const storage = require('node-persist'),
-    uuid = require('uuid');
+const storage = require('node-persist');
+const uuid = require('uuid');
 
-storage.init().then(function() {
-    exports.addProject = function(args, res, next) {
-            let project = {
-                title: args.project.value.title,
-                issues: args.project.value.issues || []
-            };
-            let id = uuid.v1();
-            storage.setItem(id, project);
-            res.end(JSON.stringify({
-                id: id,
-            }));
-        },
-
-        exports.deleteProject = function(args, res, next) {
-            storage.rm(args.id.value);
-            res.end();
-        },
-
-        exports.getProject = function(args, res, next) {
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(getProject(storage, args.id.value)));
-        },
-
-        exports.getProjects = function(args, res, next) {
-            res.setHeader('Content-Type', 'application/json');
-            let projectsIds = storage.keys();
-            res.end(JSON.stringify({
-                projects: projectsIds
-            }));
-        };
-
-});
-
-function getProject(storage, id) {
-    let project = storage.getItemSync(id) || {};
-    return {
-        id: id,
-        title: project.title,
-        issues: project.issues
-    };
+function getProject(db, id) {
+  const project = db.getItemSync(id) || {};
+  return {
+    id,
+    title: project.title,
+    issues: project.issues,
+  };
 }
+
+storage.init().then(() => {
+  exports.addProject = (args, res) => {
+    const project = {
+      title: args.project.value.title,
+      issues: args.project.value.issues || [],
+    };
+    const id = uuid.v1();
+    storage.setItem(id, project);
+    res.end(JSON.stringify({
+      id,
+    }));
+  };
+
+  exports.deleteProject = (args, res) => {
+    storage.rm(args.id.value);
+    res.end();
+  };
+
+  exports.getProject = (args, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(getProject(storage, args.id.value)));
+  };
+
+  exports.getProjects = (args, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      projects: storage.keys(),
+    }));
+  };
+});

@@ -22,13 +22,13 @@ const Actions = {
       .set('issue', issue));
 
     axios.post(`${baseUrl}/projects/${projectId}/issues`, {
-        clientId: '',
-        projectId,
-        title: opts.title,
-        priority: opts.priority,
-        duedate: opts.duedate,
-        done: opts.done,
-      }).then(
+      clientId: '',
+      projectId,
+      title: opts.title,
+      priority: opts.priority,
+      duedate: opts.duedate,
+      done: opts.done,
+    }).then(
         res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_SUCCEED).set('fakeId', fakeId).set('id', res.data.id)
           .set('projectId', projectId)
           .set('issue', issue)),

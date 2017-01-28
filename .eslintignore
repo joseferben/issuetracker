@@ -1,0 +1,4 @@
+.node-perisist/*
+.git/*
+app/*
+node_modules/*

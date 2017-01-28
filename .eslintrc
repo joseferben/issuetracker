@@ -1,3 +1,14 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "rules": {
+    "no-plusplus": "off",
+    "no-throw-literal": "off",
+    "no-underscore-dangle": "off"
+  },
+  "env": {
+    "jasmine": true,
+    "browser": true,
+    "node": true
+  }
+
 }
