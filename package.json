@@ -44,11 +44,10 @@
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
-    "backend": "node ./backend/server.js",
+    "production": "node ./backend/server.js",
     "serveAtHome": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.1.153",
     "serveAtWork": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 192.168.88.162",
-    "serve": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors",
-    "badServe": "node http.js",
+    "serve": "./node_modules/.bin/webpack-dev-server --inline --hot --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -65,20 +64,21 @@
   },
   "homepage": "https://github.com/jerben/issuetracker#readme",
   "dependencies": {
-    "js-yaml": "^3.7.0",
-    "swagger-tools": "^0.10.1",
-    "connect": "^3.5.0",
     "axios": "^0.15.3",
-    "immutable": "^3.8.1",
-    "uuid": "^2.0.3",
-    "riot": "^2.6.5",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "bootstrap-loader": "^2.0.0-beta.12",
+    "connect": "^3.5.0",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "express": "^4.14.0",
+    "immutable": "^3.8.1",
+    "jquery": "^3.1.1",
+    "js-yaml": "^3.7.0",
     "node-persist": "^2.0.7",
+    "riot": "^2.6.5",
+    "serve-static": "^1.11.2",
+    "swagger-tools": "^0.10.1",
+    "uuid": "^2.0.3",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.2",
-    "jquery": "^3.1.1"
+    "webpack-hot-middleware": "^2.13.2"
   }
 }

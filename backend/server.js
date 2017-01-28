@@ -1,4 +1,5 @@
 const app = require('connect')();
+const serveStatic = require('serve-static');
 const http = require('http');
 const swaggerTools = require('swagger-tools');
 const jsyaml = require('js-yaml');
@@ -17,6 +18,10 @@ const spec = fs.readFileSync(path.join(__dirname, './api/swagger.yaml'), 'utf8')
 const swaggerDoc = jsyaml.safeLoad(spec);
 
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
+
+  app.use(serveStatic('app', {
+    index: ['index.html', 'index.htm'],
+  }));
 
   app.use(middleware.swaggerMetadata());
 
