@@ -2,7 +2,6 @@ import uuid from 'uuid';
 
 import Issueform from './Issueform.tag';
 import Issuetable from './Issuetable.tag';
-import Project from '../src/Project.js';
 import Navigation from './Navigation.tag';
 import actions from '../src/data/IssueTrackerActions.js';
 import TodoStore from '../src/data/stores/TodoStore.js';

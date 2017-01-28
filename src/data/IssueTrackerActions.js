@@ -13,56 +13,94 @@ const Actions = {
     const fakeId = `fake-${uuid.v1()}`;
     const projectId = opts.projectId;
     const issue = Immutable.OrderedMap()
-      .set('title', opts.title)
-      .set('priority', opts.priority)
+          .set('title', opts.title)
+          .set('priority', opts.priority)
       .set('duedate', opts.duedate)
       .set('done', opts.duedate);
 
-    dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_START).set('id', fakeId).set('projectId', projectId)
-      .set('issue', issue));
-
-    axios.post(`${baseUrl}/projects/${projectId}/issues`, {
-      clientId: '',
+    dispatcher.dispatch({
+      type: actionTypes.ADD_ISSUE_START,
+      id: fakeId,
       projectId,
-      title: opts.title,
-      priority: opts.priority,
-      duedate: opts.duedate,
-      done: opts.done,
-    }).then(
-        res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_SUCCEED).set('fakeId', fakeId).set('id', res.data.id)
-          .set('projectId', projectId)
-          .set('issue', issue)),
-        () => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_ISSUE_FAIL).set('fakeId', fakeId).set('projectId', projectId)))
+      issue,
+    });
+
+    axios.post(
+        `${baseUrl}/projects/${projectId}/issues`, {
+          clientId: '',
+          projectId,
+          title: opts.title,
+          priority: opts.priority,
+          duedate: opts.duedate,
+          done: opts.done,
+        }).then(
+        res => dispatcher.dispatch({
+          type: actionTypes.ADD_ISSUE_SUCCEED,
+          fakeId,
+          id: res.data.id,
+          projectId,
+          issue,
+        }),
+        () => dispatcher.dispatch({
+          type: actionTypes.ADD_ISSUE_FAIL,
+          fakeId,
+          projectId,
+        }))
       .catch(err => console.log(`Whoops: ${err}`));
   },
 
   deleteIssue(id) {
-    dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.DELETE_ISSUE).set('id', id));
+    dispatcher.dispatch({
+      type: actionTypes.DELETE_ISSUE,
+      id,
+    });
   },
 
   toggleIssue(id) {
-    dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.TOGGLE_ISSUE).set('id', id));
+    dispatcher.dispatch({
+      type: actionTypes.TOGGLE_ISSUE,
+      id,
+    });
   },
 
   addProject(title) {
     const fakeId = `fake-${uuid.v1()}`;
 
-    dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_START).set('title', title).set('id', fakeId));
-    axios.post(`${baseUrl}/projects`, {
+    dispatcher.dispatch({
+      type: actionTypes.ADD_PROJECT_START,
       title,
-      issues: [],
-    }).then(
-      res => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_SUCCEED).set('title', title).set('fakeId', fakeId)
-        .set('id', res.data.id)),
-      () => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.ADD_PROJECT_FAIL).set('fakeId', fakeId)));
+      id: fakeId,
+    });
+
+    axios.post(
+      `${baseUrl}/projects`, {
+        title,
+        issues: [],
+      }).then(
+      res => dispatcher.dispatch({
+        type: actionTypes.ADD_PROJECT_SUCCEED,
+        title,
+        fakeId,
+        id: res.data.id,
+      }),
+      () => dispatcher.dispatch({
+        type: actionTypes.ADD_PROJECT_FAIL,
+        fakeId,
+      }));
   },
 
   deleteProject(id) {
-    dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.DELETE_PROJECT).set('id', id));
+    dispatcher.dispatch({
+      type: actionTypes.DELETE_PROJECT,
+      id,
+    });
   },
 
   changeProject(id) {
-    dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.CHANGE_PROJECT).set('id', id));
+    dispatcher.dispatch({
+      type: actionTypes.CHANGE_PROJECT,
+      id,
+    });
   },
 
   populateStore() {
@@ -72,7 +110,10 @@ const Actions = {
 
         Promise.all(projects)
           .then(
-            vals => dispatcher.dispatch(Immutable.OrderedMap().set('type', actionTypes.POPULATE_STORE).set('projects', vals.map(cur => cur.data))))
+            vals => dispatcher.dispatch({
+              type: actionTypes.POPULATE_STORE,
+              projects: vals.map(cur => cur.data),
+            }))
           .catch(
             err => console.log(err));
       });

@@ -16,77 +16,76 @@ export default class TodoStore extends ReduceStore {
   }
 
   reduce(state, action) {
-    switch (action.get('type')) {
+    switch (action.type) {
       case actionTypes.POPULATE_STORE:
         {
-          const projects = action.get('projects');
+          const projects = action.projects;
           return TodoStore.toImmutableState(projects);
         }
 
       case actionTypes.ADD_ISSUE_START:
         {
-          if (!action.getIn(['issue', 'title'])) return state;
-          const fakeId = action.get('id');
+          if (!action.issue.title) return state;
           return state
-            .setIn([action.get('projectId'), 'issues', fakeId], action.get('issue').set('id', fakeId));
+            .setIn([action.get('projectId'), 'issues', action.id], action.issue.set('id', action.id));
         }
 
       case actionTypes.ADD_ISSUE_SUCCEED:
         {
           return state
-            .deleteIn([action.get('projectId'), 'issues', action.get('fakeId')])
-            .setIn([action.get('projectId'), 'issues', action.get('id')],
-              action.get('issue').set('id', action.get('id')));
+            .deleteIn([action.projectId, 'issues', action.fakeId])
+            .setIn([action.projectId, 'issues', action.id],
+              action.issue.set('id', action.id));
         }
 
       case actionTypes.ADD_ISSUE_FAIL:
         {
           return state
-            .deleteIn([action.get('projectId'), 'issues', action.get('fakeId')]);
+            .deleteIn([action.projectId, 'issues', action.fakeId]);
         }
 
       case actionTypes.DELETE_ISSUE:
         {
           return state
-            .deleteIn([this.getProjectId(state, action.get('id')), 'issues', action.get('id')]);
+            .deleteIn([this.getProjectId(state, action.id), 'issues', action.id]);
         }
 
       case actionTypes.TOGGLE_ISSUE:
         {
           return state
-            .updateIn([this.getProjectId(state, action.get('id')), 'issues', action.get('id'), 'done'], val => !val);
+            .updateIn([this.getProjectId(state, action.id), 'issues', action.id, 'done'], val => !val);
         }
 
       case actionTypes.ADD_PROJECT_START:
         {
-          if (!action.get('title')) return state;
-          const projectId = action.get('id');
+          if (!action.title) return state;
+          const projectId = action.id;
           return state
-            .setIn([projectId, 'title'], action.get('title')).setIn([projectId, 'id'], projectId).setIn([projectId, 'issues'], Immutable.OrderedMap());
+            .setIn([projectId, 'title'], action.title).setIn([projectId, 'id'], projectId).setIn([projectId, 'issues'], Immutable.OrderedMap());
         }
 
       case actionTypes.ADD_PROJECT_SUCCEED:
         {
-          const projectId = action.get('id');
+          const projectId = action.id;
           return state
-            .delete(action.get('fakeId'))
-            .setIn([projectId, 'title'], action.get('title')).setIn([projectId, 'id'], projectId).setIn([projectId, 'issues'], Immutable.OrderedMap());
+            .delete(action.fakeId)
+            .setIn([projectId, 'title'], action.title).setIn([projectId, 'id'], projectId).setIn([projectId, 'issues'], Immutable.OrderedMap());
         }
 
       case actionTypes.ADD_PROJECT_FAIL:
         {
           return state
-            .delete(action.get('fakeId'));
+            .delete(action.fakeId);
         }
 
       case actionTypes.DELETE_PROJECT:
         {
-          return state.delete(action.get('id'));
+          return state.delete(action.id);
         }
 
       case actionTypes.CHANGE_PROJECT:
         {
-          return state.set('active', action.get('id'));
+          return state.set('active', action.id);
         }
 
       default:
