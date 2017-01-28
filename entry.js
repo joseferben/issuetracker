@@ -7,4 +7,4 @@ import './mockup.html';
 import './app/index.html';
 import './tags/App.tag';
 
-riot.mount('*'); 
+riot.mount('*');
