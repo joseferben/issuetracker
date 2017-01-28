@@ -5,7 +5,7 @@ import uuid from 'uuid';
 import actionTypes from './IssueTrackerActionTypes';
 import dispatcher from './IssueTrackerDispatcher';
 
-const baseUrl = 'http://localhost:8080/api';
+const baseUrl = 'https://issuetracker-web3.herokuapp.com/api';
 
 const Actions = {
 
