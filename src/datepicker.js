@@ -1,4 +1,3 @@
-var $ = window.$;
-module.exports = $(function () {
-    $('#datetimepicker').datetimepicker();
-});
+// eslint-disable-next-line no-undef
+const $ = window.$;
+module.exports = $(() => $('#datetimepicker').datetimepicker());

@@ -1,40 +1,82 @@
-'use strict';
-var storage  = require('node-persist');
+const storage = require('node-persist');
+const uuid = require('uuid');
 
-storage.init().then(function() {
-	exports.addIssue = function(args, res, next) {
-		var project = storage.getItemSync(args.id.value) || {};
-		project.issues.push(args.issue.value);
-		storage.setItem(args.id.value, project);
-		res.end();
-	}
+const getProjectId = (id, db) => {
+  let projectId = 0;
+  db.values().forEach((project) => {
+    project.issues.forEach((issue) => {
+      projectId = issue.id === id ? issue.projectId : projectId;
+    });
+  });
+  return projectId;
+};
 
-	exports.deleteIssue = function(args, res, next) {
-		var project = storage.getItemSync(args.pId.value) || {}; 
-		project.issues = project.issues.filter(function(cur) { return cur.id !== args.id.value });
-		storage.setItem(args.pId.value, project);
-		res.end();
-	}
+storage.init().then(() => {
+  exports.addIssue = (args, res) => {
+    const project = storage.getItemSync(args.id.value) || {};
+    const issue = args.issue.value;
+    const id = uuid.v1();
+    issue.id = id;
+    project.issues.push(issue);
+    storage.setItem(args.id.value, project);
+    res.end(JSON.stringify({
+      id,
+    }));
+  };
 
-	exports.getIssue = function(args, res, next) {
-		res.setHeader('Content-Type', 'application/json');
-		var issue = (storage.getItemSync(args.pId.value).issues || []).filter(function(cur) {
-			return cur.id === args.id.value
-		});
-		res.end(JSON.stringify(issue));
-	}
+  exports.deleteIssue = (args, res) => {
+    const project = storage.getItemSync(args.pId.value) || {};
+    project.issues = project.issues.filter(cur => cur.id !== args.id.value);
+    storage.setItem(args.pId.value, project);
+    res.end();
+  };
 
-	exports.getIssues = function(args, res, next) {
-		res.setHeader('Content-Type', 'application/json');
-		var issues = storage.getItemSync(args.id.value).issues || [];  
-		res.end((issues || []));
-	}
-	
-	exports.toggleIssue = function(args, res, next) {
-		var project = storage.getItemSync(args.pId.value) || {}; 
-		var id = args.id.value;
-		project.issues.forEach((cur, idx, arr) => arr[idx].done = (cur.done || cur.id === id) && !(cur.done && cur.id === id));
-		storage.setItem(args.pId.value, project);
-		res.end();
-	}
+  exports.deleteIssueSimple = (args, res) => {
+    const projectId = getProjectId(args.id.value, storage);
+    const project = storage.getItemSync(projectId) || {};
+    project.issues = project.issues.filter(cur => cur.id !== args.id.value);
+    storage.setItem(projectId, project);
+    res.end();
+  };
+
+
+  exports.getIssue = (args, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    const issue = (storage.getItemSync(args.pId.value).issues || [])
+          .filter(cur => cur.id === args.id.value);
+    res.end(JSON.stringify(issue));
+  };
+
+  exports.getIssues = (args, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    const issues = storage.getItemSync(args.id.value).issues || [];
+    res.end((issues || []));
+  };
+
+  exports.toggleIssue = (args, res) => {
+    const project = storage.getItemSync(args.pId.value) || {};
+    const id = args.id.value;
+    project.issues.map((cur) => {
+      const val = cur;
+      val.done = (cur.done || cur.id === id) && !(cur.done && cur.id === id);
+      return val;
+    });
+
+    storage.setItem(args.pId.value, project);
+    res.end();
+  };
+
+  exports.toggleIssueSimple = (args, res) => {
+    const projectId = getProjectId(args.id.value, storage);
+    const project = storage.getItemSync(projectId) || {};
+    const id = args.id.value;
+    project.issues.map((cur) => {
+      const val = cur;
+      val.done = (cur.done || cur.id === id) && !(cur.done && cur.id === id);
+      return val;
+    });
+
+    storage.setItem(projectId, project);
+    res.end();
+  };
 });

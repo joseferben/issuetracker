@@ -1,38 +1,39 @@
 import uuid from 'uuid';
+
 import Issueform from './Issueform.tag';
 import Issuetable from './Issuetable.tag';
-import Project from '../src/Project.js';
 import Navigation from './Navigation.tag';
-<App>	
-	<Navigation></Navigation>
-		<div class="jumbotron">
-			<div class="container">
-				<Issueform issues={ this.project }></Issueform>
-				<Issuetable issues={ this.project }></Issuetable>
-				<button type="button" class="btn { this.project.title == '' ? ' hide ' : '' } btn-danger btn-lg" onclick={ this.removeProject }> <span class="glyphicon glyphicon-trash"></span> Remove project</button>
-			</div>
-		</div>
-<script>
-	riot.route.stop();
-	riot.route.start(true);
-	riot.route(projectId => {
-		this.project.setProjectId(projectId);
-		console.log("updated project id to: ", projectId);
-		this.project.fetch();
-		this.update();
-	});
+import actions from '../src/data/IssueTrackerActions.js';
+import TodoStore from '../src/data/stores/TodoStore.js';
+<App>
+    <Navigation store={ this.store }></Navigation>
+    <div class="jumbotron">
+        <div class="container">
+            <Issueform store={ this.store }></Issueform>
+            <Issuetable store={ this.store }></Issuetable>
+            <button type="button" class="btn { this.store.getState().get('active') == '' ? ' hide ' : '' } btn-danger btn-lg" onclick={ removeProject }> <span class="glyphicon glyphicon-trash"></span> Remove project</button>
+        </div>
+    </div>
 
-	this.project = new Project(this, localStorage);
-	this.on('mount', function() {
-		console.log('fetching collection for project');	
-		this.project.fetch();
-		this.update();
-	});
+    <script>
+     this.store = new TodoStore();
+     riot.route.stop();
+     riot.route.start(true);
 
-	this.removeProject = function() {
-		this.project.removeProject() 
-		this.update();
-		riot.route('/');
-	}
-</script>
+     actions.populateStore();
+
+     this.store.emitter.addListener('change', () => {
+         this.update();
+     });
+
+     riot.route(projectId => {
+         actions.changeProject(projectId);
+         this.update();
+     });
+
+     this.removeProject = function() {
+         actions.deleteProject(this.store.getState().get('active'));
+         riot.route('/');
+     }
+    </script>
 </App>
