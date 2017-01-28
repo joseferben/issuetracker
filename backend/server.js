@@ -31,5 +31,5 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
 
   app.use(middleware.swaggerUi());
 
-  http.createServer(app).listen(serverPort, () => {});
+  http.createServer(app).listen(process.env.PORT || serverPort, () => {});
 });
